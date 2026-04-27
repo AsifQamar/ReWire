@@ -3,1758 +3,1005 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ReWire — Doorstep E-Waste Collection</title>
+<title>ReWire — Doorstep E-Waste Collection with Instant Rewards</title>
 <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,600,700&f[]=cabinet-grotesk@400,500,700,800,900&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --navy: #233C4B;
-    --orange: #FF7D2D;
-    --yellow: #FAC846;
-    --green: #A0C382;
-    --teal: #5F9B8C;
-    --white: #FFFFFF;
-    --off-white: #F7F9F6;
-    --light-gray: #EEF2EF;
-    --text-dark: #1A2E1A;
-    --text-mid: #3A4A3A;
-    --text-light: #6B7A6B;
-    --border: #D8E4D8;
-  }
+:root{--navy:#233C4B;--orange:#FF7D2D;--yellow:#FAC846;--green:#A0C382;--teal:#5F9B8C;--white:#FFFFFF;--off:#F7F9F6;--border:#DDE8DD;--td:#1C2B1C;--tm:#445244;--tl:#7A8F7A;}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'Satoshi',sans-serif;background:#fff;color:var(--td);overflow-x:hidden;}
+img{display:block;width:100%;}
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+.page{display:none;min-height:100vh;}
+.page.active{display:block;}
 
-  body {
-    font-family: 'Satoshi', sans-serif;
-    background: var(--white);
-    color: var(--text-dark);
-    overflow-x: hidden;
-  }
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;height:66px;display:flex;align-items:center;justify-content:space-between;padding:0 60px;background:rgba(255,255,255,.96);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);}
+.logo{font-family:'Cabinet Grotesk',sans-serif;font-weight:900;font-size:22px;color:var(--navy);cursor:pointer;letter-spacing:-.5px;}
+.logo span{color:var(--teal);}
+.nav-links{display:flex;gap:28px;align-items:center;list-style:none;}
+.nav-links a{font-size:14px;font-weight:500;color:var(--tm);text-decoration:none;cursor:pointer;transition:color .2s;}
+.nav-links a:hover{color:var(--teal);}
+.ncta{background:var(--teal)!important;color:#fff!important;padding:9px 22px;border-radius:100px;font-weight:700!important;transition:background .2s!important;}
+.ncta:hover{background:var(--navy)!important;}
 
-  /* PAGE SYSTEM */
-  .page { display: none; min-height: 100vh; }
-  .page.active { display: block; }
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;gap:8px;border:none;cursor:pointer;font-family:'Satoshi',sans-serif;font-weight:700;border-radius:12px;transition:all .25s;text-decoration:none;font-size:15px;padding:14px 30px;}
+.btn-teal{background:var(--teal);color:#fff;box-shadow:0 4px 20px rgba(95,155,140,.28);}
+.btn-teal:hover{background:var(--navy);transform:translateY(-1px);}
+.btn-outline{background:transparent;color:var(--navy);border:2px solid var(--border);}
+.btn-outline:hover{border-color:var(--teal);color:var(--teal);}
+.btn-orange{background:var(--orange);color:#fff;}
+.btn-orange:hover{background:#d96520;}
+.btn-ghost{background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.25);}
+.btn-ghost:hover{background:rgba(255,255,255,.22);}
+.btn-sm{padding:10px 20px;font-size:13px;}
 
-  /* ===================== NAV ===================== */
-  nav {
-    position: fixed; top: 0; left: 0; right: 0;
-    z-index: 100;
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 0 48px;
-    height: 68px;
-    background: rgba(255,255,255,0.95);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--border);
-  }
-  .nav-logo {
-    font-family: 'Cabinet Grotesk', sans-serif;
-    font-weight: 900;
-    font-size: 24px;
-    color: var(--teal);
-    cursor: pointer;
-    letter-spacing: -0.5px;
-  }
-  .nav-logo span { color: var(--orange); }
-  .nav-links {
-    display: flex; gap: 32px; align-items: center;
-    list-style: none;
-  }
-  .nav-links a {
-    font-size: 14px; font-weight: 500;
-    color: var(--text-mid);
-    text-decoration: none;
-    cursor: pointer;
-    transition: color 0.2s;
-  }
-  .nav-links a:hover { color: var(--teal); }
-  .nav-cta {
-    background: var(--teal);
-    color: white !important;
-    padding: 10px 22px;
-    border-radius: 100px;
-    font-size: 14px !important;
-    font-weight: 600 !important;
-    transition: background 0.2s !important;
-  }
-  .nav-cta:hover { background: var(--navy) !important; }
+/* TYPE */
+.lbl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.6px;color:var(--teal);margin-bottom:14px;}
+.lbl-w{color:var(--green);}
+.sh{font-family:'Cabinet Grotesk',sans-serif;font-weight:900;letter-spacing:-1.5px;line-height:1.05;color:var(--navy);}
+.sh-xl{font-size:clamp(46px,5.5vw,76px);}
+.sh-lg{font-size:clamp(36px,4vw,56px);}
+.sh-md{font-size:clamp(28px,3vw,42px);}
+.sh-w{color:#fff;}
+.sub{font-size:16px;color:var(--tm);line-height:1.65;}
 
-  /* ===================== HOME PAGE ===================== */
-  /* HERO */
-  .hero {
-    padding-top: 68px;
-    min-height: 100vh;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    align-items: center;
-    gap: 0;
-    background: var(--off-white);
-    position: relative;
-    overflow: hidden;
-  }
-  .hero::before {
-    content: '';
-    position: absolute; inset: 0;
-    background: radial-gradient(ellipse 60% 80% at 80% 50%, rgba(160,195,130,0.12) 0%, transparent 60%),
-                radial-gradient(ellipse 40% 60% at 10% 80%, rgba(95,155,140,0.08) 0%, transparent 50%);
-    pointer-events: none;
-  }
-  .hero-left {
-    padding: 80px 64px 80px 80px;
-    display: flex; flex-direction: column; gap: 28px;
-    position: relative; z-index: 2;
-  }
-  .hero-badge {
-    display: inline-flex; align-items: center; gap: 8px;
-    background: rgba(95,155,140,0.1);
-    border: 1px solid rgba(95,155,140,0.3);
-    border-radius: 100px;
-    padding: 6px 16px;
-    width: fit-content;
-  }
-  .hero-badge-dot {
-    width: 8px; height: 8px;
-    border-radius: 50%;
-    background: var(--teal);
-    animation: pulse 2s infinite;
-  }
-  @keyframes pulse {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.5; transform: scale(1.3); }
-  }
-  .hero-badge span {
-    font-size: 12px; font-weight: 600;
-    color: var(--teal); text-transform: uppercase; letter-spacing: 0.8px;
-  }
-  .hero-title {
-    font-family: 'Cabinet Grotesk', sans-serif;
-    font-weight: 900;
-    font-size: clamp(52px, 5vw, 76px);
-    line-height: 1.0;
-    color: var(--navy);
-    letter-spacing: -2px;
-  }
-  .hero-title .accent { color: var(--teal); }
-  .hero-title .accent-orange { color: var(--orange); }
-  .hero-tagline {
-    font-size: 18px; font-weight: 400;
-    color: var(--text-mid);
-    line-height: 1.6;
-    max-width: 480px;
-  }
-  .hero-cta-group {
-    display: flex; gap: 16px; align-items: center;
-    flex-wrap: wrap;
-  }
-  .btn-primary {
-    background: var(--teal);
-    color: white;
-    padding: 16px 32px;
-    border-radius: 12px;
-    font-size: 15px; font-weight: 600;
-    text-decoration: none; cursor: pointer;
-    border: none;
-    transition: all 0.2s;
-    display: inline-flex; align-items: center; gap: 8px;
-    box-shadow: 0 4px 20px rgba(95,155,140,0.3);
-  }
-  .btn-primary:hover {
-    background: var(--navy);
-    transform: translateY(-1px);
-    box-shadow: 0 6px 28px rgba(35,60,75,0.25);
-  }
-  .btn-secondary {
-    background: transparent;
-    color: var(--navy);
-    padding: 16px 32px;
-    border-radius: 12px;
-    font-size: 15px; font-weight: 600;
-    cursor: pointer;
-    border: 2px solid var(--border);
-    transition: all 0.2s;
-    display: inline-flex; align-items: center; gap: 8px;
-  }
-  .btn-secondary:hover {
-    border-color: var(--teal);
-    color: var(--teal);
-  }
-  .hero-stats {
-    display: flex; gap: 32px; padding-top: 8px;
-  }
-  .hero-stat { display: flex; flex-direction: column; gap: 2px; }
-  .hero-stat-number {
-    font-family: 'Cabinet Grotesk', sans-serif;
-    font-weight: 900; font-size: 28px;
-    color: var(--navy); letter-spacing: -1px;
-  }
-  .hero-stat-label {
-    font-size: 12px; font-weight: 500;
-    color: var(--text-light); text-transform: uppercase; letter-spacing: 0.5px;
-  }
-  .hero-right {
-    position: relative; height: 100vh;
-    display: flex; align-items: center; justify-content: center;
-    overflow: hidden;
-  }
-  .hero-right img {
-    width: 100%; height: 100%;
-    object-fit: cover;
-    filter: brightness(0.85);
-  }
-  .hero-right-overlay {
-    position: absolute; inset: 0;
-    background: linear-gradient(to right, var(--off-white) 0%, transparent 30%),
-                linear-gradient(to top, rgba(35,60,75,0.3) 0%, transparent 50%);
-  }
-  .hero-right-card {
-    position: absolute;
-    bottom: 48px; right: 32px;
-    background: white;
-    border-radius: 16px;
-    padding: 20px 24px;
-    box-shadow: 0 8px 40px rgba(0,0,0,0.12);
-    max-width: 260px;
-  }
-  .hero-right-card-title {
-    font-size: 13px; font-weight: 600;
-    color: var(--text-light); text-transform: uppercase; letter-spacing: 0.5px;
-    margin-bottom: 8px;
-  }
-  .hero-right-card-value {
-    font-family: 'Cabinet Grotesk', sans-serif;
-    font-size: 32px; font-weight: 900;
-    color: var(--teal); letter-spacing: -1px;
-  }
-  .hero-right-card-sub {
-    font-size: 13px; color: var(--text-mid); margin-top: 4px;
-  }
+/* FADES */
+.fade{opacity:0;transform:translateY(24px);transition:opacity .6s,transform .6s;}
+.fade.vis{opacity:1;transform:none;}
+.d1{transition-delay:.08s;}.d2{transition-delay:.16s;}.d3{transition-delay:.24s;}.d4{transition-delay:.32s;}
 
-  /* ROLE SELECTOR */
-  .role-section {
-    padding: 100px 80px;
-    background: var(--white);
-  }
-  .section-label {
-    font-size: 12px; font-weight: 700;
-    color: var(--teal); text-transform: uppercase; letter-spacing: 1.5px;
-    margin-bottom: 16px;
-  }
-  .section-title {
-    font-family: 'Cabinet Grotesk', sans-serif;
-    font-weight: 900; font-size: 48px;
-    color: var(--navy); letter-spacing: -1.5px;
-    line-height: 1.1; margin-bottom: 48px;
-  }
-  .role-cards {
-    display: grid; grid-template-columns: 1fr 1fr;
-    gap: 24px; max-width: 900px;
-  }
-  .role-card {
-    border: 2px solid var(--border);
-    border-radius: 20px;
-    padding: 40px;
-    cursor: pointer;
-    transition: all 0.3s;
-    position: relative;
-    overflow: hidden;
-    background: var(--off-white);
-  }
-  .role-card::before {
-    content: '';
-    position: absolute; inset: 0;
-    opacity: 0;
-    transition: opacity 0.3s;
-  }
-  .role-card.user-card::before {
-    background: linear-gradient(135deg, rgba(95,155,140,0.06), rgba(160,195,130,0.06));
-  }
-  .role-card.recycler-card::before {
-    background: linear-gradient(135deg, rgba(255,125,45,0.06), rgba(250,200,70,0.06));
-  }
-  .role-card:hover {
-    border-color: var(--teal);
-    transform: translateY(-4px);
-    box-shadow: 0 16px 48px rgba(95,155,140,0.12);
-  }
-  .role-card:hover::before { opacity: 1; }
-  .role-card.recycler-card:hover { border-color: var(--orange); }
-  .role-icon {
-    width: 56px; height: 56px;
-    border-radius: 14px;
-    display: flex; align-items: center; justify-content: center;
-    margin-bottom: 20px;
-    font-size: 24px;
-  }
-  .role-icon.green { background: rgba(95,155,140,0.12); }
-  .role-icon.orange { background: rgba(255,125,45,0.12); }
-  .role-card h3 {
-    font-family: 'Cabinet Grotesk', sans-serif;
-    font-weight: 900; font-size: 24px;
-    color: var(--navy); margin-bottom: 10px;
-  }
-  .role-card p {
-    font-size: 15px; color: var(--text-mid);
-    line-height: 1.6; margin-bottom: 24px;
-  }
-  .role-card-cta {
-    display: inline-flex; align-items: center; gap: 8px;
-    font-size: 14px; font-weight: 600;
-    color: var(--teal);
-  }
-  .recycler-card .role-card-cta { color: var(--orange); }
-  .role-card-arrow {
-    display: inline-block;
-    transition: transform 0.2s;
-  }
-  .role-card:hover .role-card-arrow { transform: translateX(4px); }
+/* ===================== HOME ===================== */
 
-  /* IMPACT SECTION */
-  .impact-section {
-    padding: 100px 80px;
-    background: var(--navy);
-    color: white;
-  }
-  .impact-section .section-label { color: var(--green); }
-  .impact-section .section-title { color: white; }
-  .impact-grid {
-    display: grid; grid-template-columns: repeat(3, 1fr);
-    gap: 40px; margin-top: 56px;
-  }
-  .impact-card {
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 20px;
-    padding: 36px;
-    transition: all 0.3s;
-  }
-  .impact-card:hover {
-    background: rgba(255,255,255,0.08);
-    border-color: rgba(95,155,140,0.4);
-    transform: translateY(-2px);
-  }
-  .impact-number {
-    font-family: 'Cabinet Grotesk', sans-serif;
-    font-weight: 900; font-size: 52px;
-    letter-spacing: -2px; line-height: 1;
-    margin-bottom: 10px;
-  }
-  .impact-card:nth-child(1) .impact-number { color: var(--yellow); }
-  .impact-card:nth-child(2) .impact-number { color: var(--green); }
-  .impact-card:nth-child(3) .impact-number { color: var(--orange); }
-  .impact-card h4 {
-    font-size: 16px; font-weight: 600;
-    color: rgba(255,255,255,0.9);
-    margin-bottom: 8px;
-  }
-  .impact-card p {
-    font-size: 14px; color: rgba(255,255,255,0.5);
-    line-height: 1.6;
-  }
+/* HERO */
+.hero{padding-top:66px;display:grid;grid-template-columns:1fr 1fr;min-height:100vh;background:var(--off);overflow:hidden;}
+.hero-l{padding:80px 56px 80px 80px;display:flex;flex-direction:column;gap:26px;justify-content:center;}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(95,155,140,.1);border:1px solid rgba(95,155,140,.25);border-radius:100px;padding:6px 16px;width:fit-content;}
+.badge-dot{width:7px;height:7px;border-radius:50%;background:var(--teal);animation:blink 2s infinite;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:.25;}}
+.hero-badge span{font-size:12px;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:.8px;}
+.hero-btns{display:flex;gap:14px;flex-wrap:wrap;}
+.hero-r{position:relative;overflow:hidden;}
+.hero-r img{width:100%;height:100%;object-fit:cover;filter:brightness(.8);}
+.hero-r-ov{position:absolute;inset:0;background:linear-gradient(to right,var(--off) 0%,transparent 26%),linear-gradient(to top,rgba(35,60,75,.35) 0%,transparent 55%);}
+.hero-card{position:absolute;bottom:36px;right:28px;background:#fff;border-radius:18px;padding:22px 26px;box-shadow:0 12px 40px rgba(0,0,0,.12);min-width:220px;}
+.hc-lbl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--tl);margin-bottom:6px;}
+.hc-val{font-family:'Cabinet Grotesk',sans-serif;font-weight:900;font-size:38px;color:var(--teal);letter-spacing:-1px;line-height:1;}
+.hc-sub{font-size:12px;color:var(--tm);margin-top:5px;}
 
-  /* HOW IT WORKS */
-  .how-section {
-    padding: 100px 80px;
-    background: var(--off-white);
-  }
-  .steps-grid {
-    display: grid; grid-template-columns: repeat(5, 1fr);
-    gap: 0; margin-top: 56px; position: relative;
-  }
-  .steps-grid::before {
-    content: '';
-    position: absolute;
-    top: 28px; left: 10%; right: 10%;
-    height: 2px;
-    background: linear-gradient(to right, var(--teal), var(--green));
-    z-index: 0;
-  }
-  .step-item {
-    display: flex; flex-direction: column;
-    align-items: center; text-align: center;
-    padding: 0 16px;
-    position: relative; z-index: 1;
-  }
-  .step-circle {
-    width: 56px; height: 56px;
-    border-radius: 50%;
-    background: white;
-    border: 3px solid var(--teal);
-    display: flex; align-items: center; justify-content: center;
-    font-family: 'Cabinet Grotesk', sans-serif;
-    font-weight: 900; font-size: 20px;
-    color: var(--teal);
-    margin-bottom: 20px;
-    box-shadow: 0 4px 16px rgba(95,155,140,0.2);
-  }
-  .step-item:nth-child(3) .step-circle { background: var(--teal); color: white; }
-  .step-title {
-    font-size: 14px; font-weight: 700;
-    color: var(--navy); margin-bottom: 8px;
-  }
-  .step-desc {
-    font-size: 13px; color: var(--text-light); line-height: 1.5;
-  }
+/* MARQUEE */
+.mq{background:var(--navy);padding:13px 0;overflow:hidden;}
+.mq-track{display:flex;gap:48px;white-space:nowrap;animation:mscroll 28s linear infinite;}
+@keyframes mscroll{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
+.mq-item{font-size:12px;font-weight:600;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:1px;display:flex;align-items:center;gap:12px;}
+.mq-dot{width:5px;height:5px;border-radius:50%;background:var(--teal);flex-shrink:0;}
 
-  /* REWARDS SECTION */
-  .rewards-section {
-    padding: 100px 80px;
-    background: var(--white);
-    display: grid; grid-template-columns: 1fr 1fr;
-    gap: 80px; align-items: center;
-  }
-  .rewards-img {
-    border-radius: 24px;
-    overflow: hidden;
-    height: 500px;
-    position: relative;
-  }
-  .rewards-img img {
-    width: 100%; height: 100%;
-    object-fit: cover;
-  }
-  .rewards-img-overlay {
-    position: absolute; inset: 0;
-    background: linear-gradient(to top, rgba(35,60,75,0.5), transparent 60%);
-  }
-  .reward-pill-group {
-    position: absolute; bottom: 32px; left: 24px; right: 24px;
-    display: flex; gap: 10px; flex-wrap: wrap;
-  }
-  .reward-pill {
-    background: white;
-    border-radius: 100px;
-    padding: 8px 16px;
-    font-size: 13px; font-weight: 600;
-    color: var(--navy);
-    display: flex; align-items: center; gap: 6px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  }
-  .reward-pill-dot {
-    width: 8px; height: 8px; border-radius: 50%;
-  }
-  .reward-features { display: flex; flex-direction: column; gap: 32px; }
-  .reward-item {
-    display: flex; gap: 20px; align-items: flex-start;
-  }
-  .reward-item-icon {
-    width: 48px; height: 48px; border-radius: 12px;
-    display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0; font-size: 20px;
-  }
-  .reward-item-text h4 {
-    font-size: 17px; font-weight: 700;
-    color: var(--navy); margin-bottom: 6px;
-  }
-  .reward-item-text p {
-    font-size: 14px; color: var(--text-mid);
-    line-height: 1.6;
-  }
+/* ROLE CARDS */
+.roles{padding:100px 80px;background:#fff;}
+.role-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:48px;}
+.role-card{border:2px solid var(--border);border-radius:24px;overflow:hidden;cursor:pointer;transition:all .3s;background:var(--off);}
+.role-card:hover{transform:translateY(-5px);box-shadow:0 20px 56px rgba(95,155,140,.12);}
+.rc-u:hover{border-color:var(--teal);}
+.rc-b:hover{border-color:var(--orange);}
+.rc-img{height:220px;overflow:hidden;position:relative;}
+.rc-img img{width:100%;height:100%;object-fit:cover;transition:transform .4s;}
+.role-card:hover .rc-img img{transform:scale(1.05);}
+.rc-tint{position:absolute;inset:0;background:linear-gradient(to top,rgba(35,60,75,.45),transparent 60%);}
+.rc-body{padding:30px 32px;}
+.rc-body h3{font-family:'Cabinet Grotesk',sans-serif;font-weight:900;font-size:22px;color:var(--navy);margin-bottom:8px;}
+.rc-body p{font-size:14px;color:var(--tm);line-height:1.6;margin-bottom:20px;}
+.rc-cta{font-size:14px;font-weight:700;display:flex;align-items:center;gap:6px;transition:gap .2s;}
+.role-card:hover .rc-cta{gap:10px;}
+.rc-u .rc-cta{color:var(--teal);}
+.rc-b .rc-cta{color:var(--orange);}
 
-  /* AWARENESS BANNER */
-  .awareness-section {
-    padding: 80px;
-    background: linear-gradient(135deg, var(--teal) 0%, var(--navy) 100%);
-    display: grid; grid-template-columns: 1fr auto;
-    align-items: center; gap: 48px;
-  }
-  .awareness-text h2 {
-    font-family: 'Cabinet Grotesk', sans-serif;
-    font-weight: 900; font-size: 36px;
-    color: white; letter-spacing: -1px; margin-bottom: 16px;
-  }
-  .awareness-text p {
-    font-size: 16px; color: rgba(255,255,255,0.7);
-    line-height: 1.6; max-width: 600px;
-  }
-  .awareness-badges {
-    display: flex; flex-direction: column; gap: 12px;
-  }
-  .awareness-badge {
-    background: rgba(255,255,255,0.1);
-    border: 1px solid rgba(255,255,255,0.2);
-    border-radius: 12px;
-    padding: 14px 20px;
-    display: flex; gap: 12px; align-items: center;
-    min-width: 260px;
-  }
-  .awareness-badge-icon { font-size: 20px; }
-  .awareness-badge-text { color: rgba(255,255,255,0.9); font-size: 14px; font-weight: 500; }
+/* CATEGORIES */
+.cats{padding:100px 80px;background:var(--off);}
+.cats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:48px;}
+.cat{background:#fff;border:1px solid var(--border);border-radius:20px;overflow:hidden;cursor:pointer;transition:all .25s;position:relative;}
+.cat:hover{border-color:var(--teal);transform:translateY(-4px);box-shadow:0 12px 36px rgba(95,155,140,.1);}
+.cat-img{height:155px;overflow:hidden;}
+.cat-img img{width:100%;height:100%;object-fit:cover;transition:transform .35s;}
+.cat:hover .cat-img img{transform:scale(1.06);}
+.cat-body{padding:16px 18px;}
+.cat-name{font-family:'Cabinet Grotesk',sans-serif;font-weight:800;font-size:15px;color:var(--navy);margin-bottom:3px;}
+.cat-rate{font-size:13px;font-weight:700;color:var(--teal);}
+.cat-tag{position:absolute;top:10px;right:10px;background:var(--teal);color:#fff;font-size:10px;font-weight:700;padding:4px 9px;border-radius:100px;text-transform:uppercase;letter-spacing:.4px;}
+.cat-tag-o{background:var(--orange);}
 
-  /* FOOTER */
-  footer {
-    background: var(--navy);
-    color: rgba(255,255,255,0.4);
-    padding: 40px 80px;
-    display: flex; align-items: center; justify-content: space-between;
-    border-top: 1px solid rgba(255,255,255,0.06);
-  }
-  .footer-logo {
-    font-family: 'Cabinet Grotesk', sans-serif;
-    font-weight: 900; font-size: 20px;
-    color: white;
-  }
-  .footer-logo span { color: var(--teal); }
-  footer p { font-size: 13px; }
-  .footer-links { display: flex; gap: 24px; }
-  .footer-links a {
-    font-size: 13px; color: rgba(255,255,255,0.4);
-    text-decoration: none; cursor: pointer;
-    transition: color 0.2s;
-  }
-  .footer-links a:hover { color: rgba(255,255,255,0.8); }
+/* IMPACT */
+.impact{padding:100px 80px;background:var(--navy);}
+.imp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;margin-top:48px;border-radius:24px;overflow:hidden;}
+.ic{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);padding:46px 38px;transition:background .3s;}
+.ic:hover{background:rgba(255,255,255,.07);}
+.ic-num{font-family:'Cabinet Grotesk',sans-serif;font-weight:900;font-size:56px;letter-spacing:-2px;line-height:1;margin-bottom:12px;}
+.ic:nth-child(1) .ic-num{color:var(--yellow);}
+.ic:nth-child(2) .ic-num{color:var(--green);}
+.ic:nth-child(3) .ic-num{color:var(--orange);}
+.ic h4{font-size:16px;font-weight:700;color:rgba(255,255,255,.9);margin-bottom:8px;}
+.ic p{font-size:14px;color:rgba(255,255,255,.42);line-height:1.6;}
 
+/* HOW */
+.how{padding:100px 80px;background:#fff;}
+.how-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;margin-top:52px;position:relative;}
+.how-grid::after{content:'';position:absolute;top:29px;left:10%;right:10%;height:2px;background:linear-gradient(90deg,var(--teal),var(--green));z-index:0;}
+.how-step{text-align:center;padding:0 8px;position:relative;z-index:1;}
+.how-num{width:58px;height:58px;border-radius:50%;background:#fff;border:3px solid var(--teal);display:flex;align-items:center;justify-content:center;font-family:'Cabinet Grotesk',sans-serif;font-weight:900;font-size:22px;color:var(--teal);margin:0 auto 16px;box-shadow:0 4px 16px rgba(95,155,140,.18);}
+.how-step.hs-act .how-num{background:var(--teal);color:#fff;}
+.how-step h4{font-size:13px;font-weight:700;color:var(--navy);margin-bottom:5px;}
+.how-step p{font-size:12px;color:var(--tl);line-height:1.5;}
 
-  /* ===================== USER PAGE ===================== */
-  .user-page-hero {
-    padding-top: 68px;
-    background: var(--off-white);
-    display: grid; grid-template-columns: 1fr 1fr;
-    min-height: 70vh; align-items: center;
-    overflow: hidden;
-  }
-  .user-hero-left {
-    padding: 80px 64px 80px 80px;
-  }
-  .user-hero-right {
-    position: relative; height: 70vh; overflow: hidden;
-  }
-  .user-hero-right img {
-    width: 100%; height: 100%; object-fit: cover;
-    filter: brightness(0.8);
-  }
-  .user-hero-right-overlay {
-    position: absolute; inset: 0;
-    background: linear-gradient(to right, var(--off-white) 0%, transparent 25%);
-  }
+/* REWARDS SPLIT */
+.rewards{display:grid;grid-template-columns:1fr 1fr;min-height:580px;background:#fff;}
+.rew-img{position:relative;overflow:hidden;}
+.rew-img img{width:100%;height:100%;object-fit:cover;}
+.rew-tint{position:absolute;inset:0;background:linear-gradient(to right,transparent 55%,#fff 100%),linear-gradient(to top,rgba(35,60,75,.4),transparent 55%);}
+.rew-pills{position:absolute;bottom:32px;left:28px;display:flex;flex-wrap:wrap;gap:9px;}
+.rpill{background:#fff;border-radius:100px;padding:7px 15px;font-size:12px;font-weight:700;color:var(--navy);display:flex;align-items:center;gap:6px;box-shadow:0 4px 14px rgba(0,0,0,.1);}
+.rpd{width:7px;height:7px;border-radius:50%;}
+.rew-content{padding:80px 64px;display:flex;flex-direction:column;justify-content:center;gap:26px;}
+.rw-row{display:flex;gap:16px;align-items:flex-start;}
+.rw-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.rw-text h4{font-family:'Cabinet Grotesk',sans-serif;font-weight:800;font-size:16px;color:var(--navy);margin-bottom:4px;}
+.rw-text p{font-size:14px;color:var(--tm);line-height:1.6;}
 
-  /* SCHEDULE WIDGET */
-  .schedule-section {
-    padding: 100px 80px;
-    background: white;
-  }
-  .schedule-form {
-    max-width: 700px;
-    background: var(--off-white);
-    border: 1px solid var(--border);
-    border-radius: 24px;
-    padding: 48px;
-    margin-top: 48px;
-  }
-  .form-row {
-    display: grid; grid-template-columns: 1fr 1fr;
-    gap: 20px; margin-bottom: 20px;
-  }
-  .form-group {
-    display: flex; flex-direction: column; gap: 8px;
-  }
-  .form-group label {
-    font-size: 13px; font-weight: 600;
-    color: var(--text-mid); text-transform: uppercase; letter-spacing: 0.5px;
-  }
-  .form-group select,
-  .form-group input {
-    background: white;
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 12px 16px;
-    font-family: 'Satoshi', sans-serif;
-    font-size: 15px; color: var(--navy);
-    outline: none; width: 100%;
-    transition: border-color 0.2s;
-    -webkit-appearance: none;
-  }
-  .form-group select:focus,
-  .form-group input:focus {
-    border-color: var(--teal);
-    box-shadow: 0 0 0 3px rgba(95,155,140,0.1);
-  }
+/* AWARENESS */
+.aware{background:linear-gradient(135deg,var(--teal) 0%,var(--navy) 100%);padding:80px;display:grid;grid-template-columns:1fr auto;gap:56px;align-items:center;}
+.aw-h{font-family:'Cabinet Grotesk',sans-serif;font-weight:900;font-size:clamp(28px,3vw,42px);color:#fff;letter-spacing:-1px;margin-bottom:16px;}
+.aw-p{font-size:15px;color:rgba(255,255,255,.62);line-height:1.65;max-width:560px;}
+.aw-tags{display:flex;flex-direction:column;gap:11px;}
+.aw-tag{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:12px;padding:13px 18px;display:flex;align-items:center;gap:11px;min-width:260px;}
+.aw-tag span{font-size:14px;font-weight:600;color:rgba(255,255,255,.9);}
 
-  /* RECYCLERS LIST */
-  .recyclers-section {
-    padding: 80px;
-    background: var(--off-white);
-  }
-  .recyclers-grid {
-    display: grid; grid-template-columns: repeat(3, 1fr);
-    gap: 24px; margin-top: 40px;
-  }
-  .recycler-card-item {
-    background: white;
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 28px;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-  .recycler-card-item:hover {
-    border-color: var(--teal);
-    box-shadow: 0 8px 32px rgba(95,155,140,0.1);
-    transform: translateY(-2px);
-  }
-  .recycler-card-item.selected {
-    border-color: var(--teal);
-    background: rgba(95,155,140,0.03);
-  }
-  .recycler-header {
-    display: flex; justify-content: space-between; align-items: flex-start;
-    margin-bottom: 16px;
-  }
-  .recycler-name {
-    font-size: 17px; font-weight: 700; color: var(--navy);
-  }
-  .recycler-badge {
-    background: rgba(95,155,140,0.1);
-    color: var(--teal);
-    font-size: 11px; font-weight: 700;
-    padding: 4px 10px; border-radius: 100px;
-    text-transform: uppercase; letter-spacing: 0.5px;
-  }
-  .recycler-meta { display: flex; gap: 16px; margin-bottom: 16px; }
-  .recycler-meta-item {
-    font-size: 13px; color: var(--text-light);
-    display: flex; align-items: center; gap: 4px;
-  }
-  .recycler-rates { display: flex; flex-direction: column; gap: 6px; }
-  .recycler-rate-row {
-    display: flex; justify-content: space-between;
-    font-size: 13px;
-  }
-  .recycler-rate-row .rate-label { color: var(--text-mid); }
-  .recycler-rate-row .rate-value { font-weight: 700; color: var(--teal); }
-  .stars { color: var(--yellow); font-size: 12px; }
+/* TESTIMONIALS */
+.testi{padding:100px 80px;background:var(--off);}
+.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:48px;}
+.tc{background:#fff;border:1px solid var(--border);border-radius:20px;padding:28px;transition:all .2s;}
+.tc:hover{box-shadow:0 8px 28px rgba(0,0,0,.07);}
+.tc-stars{color:var(--yellow);font-size:13px;margin-bottom:12px;}
+.tc-text{font-size:15px;color:var(--tm);line-height:1.65;margin-bottom:18px;}
+.tc-auth{display:flex;align-items:center;gap:10px;}
+.tc-av{width:40px;height:40px;border-radius:50%;object-fit:cover;flex-shrink:0;}
+.tc-name{font-size:14px;font-weight:700;color:var(--navy);}
+.tc-loc{font-size:12px;color:var(--tl);}
 
-  /* WALLET */
-  .wallet-section {
-    padding: 80px;
-    background: white;
-  }
-  .wallet-card {
-    background: linear-gradient(135deg, var(--navy) 0%, var(--teal) 100%);
-    border-radius: 24px;
-    padding: 48px;
-    color: white;
-    max-width: 680px;
-    margin-bottom: 48px;
-    position: relative; overflow: hidden;
-  }
-  .wallet-card::before {
-    content: '';
-    position: absolute; top: -40px; right: -40px;
-    width: 200px; height: 200px;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.05);
-  }
-  .wallet-balance-label {
-    font-size: 13px; font-weight: 600;
-    text-transform: uppercase; letter-spacing: 0.8px;
-    opacity: 0.6; margin-bottom: 8px;
-  }
-  .wallet-balance {
-    font-family: 'Cabinet Grotesk', sans-serif;
-    font-size: 56px; font-weight: 900;
-    letter-spacing: -2px; margin-bottom: 4px;
-  }
-  .wallet-equiv {
-    opacity: 0.6; font-size: 14px; margin-bottom: 32px;
-  }
-  .wallet-actions { display: flex; gap: 16px; }
-  .wallet-btn {
-    padding: 12px 24px;
-    border-radius: 10px;
-    font-size: 14px; font-weight: 600;
-    cursor: pointer; border: none;
-    transition: all 0.2s;
-  }
-  .wallet-btn-primary {
-    background: white; color: var(--navy);
-  }
-  .wallet-btn-secondary {
-    background: rgba(255,255,255,0.15);
-    color: white;
-    border: 1px solid rgba(255,255,255,0.3);
-  }
-  .wallet-btn:hover { opacity: 0.85; }
+/* FOOTER */
+footer{background:var(--navy);padding:56px 80px 28px;}
+.ft{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:44px;}
+.fb p{font-size:14px;color:rgba(255,255,255,.42);line-height:1.6;max-width:270px;margin-top:12px;}
+.fc h5{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,.35);margin-bottom:14px;}
+.fc a{display:block;font-size:14px;color:rgba(255,255,255,.52);margin-bottom:9px;text-decoration:none;cursor:pointer;transition:color .2s;}
+.fc a:hover{color:#fff;}
+.fb-bot{border-top:1px solid rgba(255,255,255,.08);padding-top:22px;display:flex;justify-content:space-between;align-items:center;}
+.fb-bot p{font-size:13px;color:rgba(255,255,255,.28);}
 
-  .redeem-options {
-    display: grid; grid-template-columns: repeat(4, 1fr);
-    gap: 16px;
-  }
-  .redeem-option {
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 24px 20px;
-    text-align: center;
-    cursor: pointer; transition: all 0.2s;
-    background: var(--off-white);
-  }
-  .redeem-option:hover {
-    border-color: var(--teal);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(95,155,140,0.1);
-  }
-  .redeem-option-icon {
-    width: 48px; height: 48px;
-    border-radius: 12px;
-    margin: 0 auto 12px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 22px;
-  }
-  .redeem-option h4 { font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 4px; }
-  .redeem-option p { font-size: 12px; color: var(--text-light); }
+/* ===================== USER PAGE ===================== */
+.u-hero{padding-top:66px;display:grid;grid-template-columns:1fr 1fr;min-height:65vh;background:var(--off);overflow:hidden;}
+.uh-l{padding:72px 56px 72px 80px;display:flex;flex-direction:column;justify-content:center;gap:20px;}
+.uh-r{position:relative;overflow:hidden;}
+.uh-r img{width:100%;height:100%;object-fit:cover;filter:brightness(.78);}
+.uh-r-ov{position:absolute;inset:0;background:linear-gradient(to right,var(--off) 0%,transparent 22%);}
 
-  /* TRANSACTION HISTORY */
-  .txn-section { padding: 0 80px 80px; }
-  .txn-table {
-    background: white;
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    overflow: hidden; margin-top: 32px;
-  }
-  .txn-row {
-    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
-    padding: 16px 24px;
-    align-items: center;
-    border-bottom: 1px solid var(--border);
-    transition: background 0.15s;
-  }
-  .txn-row:last-child { border-bottom: none; }
-  .txn-row:hover { background: var(--off-white); }
-  .txn-row.header {
-    background: var(--off-white);
-    font-size: 11px; font-weight: 700;
-    text-transform: uppercase; letter-spacing: 0.8px;
-    color: var(--text-light);
-  }
-  .txn-row.header:hover { background: var(--off-white); }
-  .txn-item { font-size: 14px; font-weight: 600; color: var(--navy); }
-  .txn-date { font-size: 13px; color: var(--text-light); }
-  .txn-kg { font-size: 13px; color: var(--text-mid); }
-  .txn-points { font-size: 14px; font-weight: 700; color: var(--teal); }
+/* SCHED */
+.sched{padding:80px;}
+.sched-wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:start;}
+.sched-form{background:var(--off);border:1px solid var(--border);border-radius:22px;padding:38px;}
+.f-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;}
+.f-g{display:flex;flex-direction:column;gap:7px;}
+.f-g label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--tl);}
+.f-g input,.f-g select{background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px 15px;font-family:'Satoshi',sans-serif;font-size:15px;color:var(--navy);outline:none;width:100%;-webkit-appearance:none;transition:border-color .2s;}
+.f-g input:focus,.f-g select:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(95,155,140,.1);}
+.preview-card{background:var(--navy);border-radius:22px;padding:34px;color:#fff;position:sticky;top:86px;}
+.prev-title{font-family:'Cabinet Grotesk',sans-serif;font-weight:900;font-size:21px;margin-bottom:22px;}
+.prev-row{display:flex;justify-content:space-between;align-items:center;padding:13px 0;border-bottom:1px solid rgba(255,255,255,.08);}
+.prev-row:last-of-type{border-bottom:none;}
+.prev-lbl{font-size:13px;color:rgba(255,255,255,.45);}
+.prev-val{font-size:14px;font-weight:700;color:#fff;}
+.prev-reward{font-family:'Cabinet Grotesk',sans-serif;font-size:32px;font-weight:900;color:var(--yellow);}
+.prev-note{font-size:11px;color:rgba(255,255,255,.28);margin-top:16px;line-height:1.5;}
 
+/* RECYCLER LIST */
+.r-list{padding:0 80px 80px;}
+.r-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:28px;}
+.r-card{background:#fff;border:1.5px solid var(--border);border-radius:18px;padding:24px;cursor:pointer;transition:all .2s;}
+.r-card:hover,.r-card.sel{border-color:var(--teal);box-shadow:0 8px 28px rgba(95,155,140,.1);}
+.r-card.sel{background:rgba(95,155,140,.025);}
+.r-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;}
+.r-name{font-family:'Cabinet Grotesk',sans-serif;font-weight:800;font-size:16px;color:var(--navy);}
+.r-b{font-size:10px;font-weight:700;padding:4px 10px;border-radius:100px;text-transform:uppercase;letter-spacing:.4px;}
+.r-meta{display:flex;gap:14px;margin-bottom:12px;}
+.r-meta span{font-size:12px;color:var(--tl);}
+.r-rates{background:var(--off);border-radius:10px;padding:11px 13px;display:flex;flex-direction:column;gap:5px;}
+.r-rr{display:flex;justify-content:space-between;font-size:12px;}
+.r-rl{color:var(--tm);}.r-rv{font-weight:700;color:var(--teal);}
+.stars{color:var(--yellow);font-size:11px;}
 
-  /* ===================== RECYCLER PAGE ===================== */
-  .recycler-page-hero {
-    padding-top: 68px;
-    background: linear-gradient(135deg, var(--navy) 0%, #1a3240 100%);
-    display: grid; grid-template-columns: 1fr 1fr;
-    min-height: 70vh; align-items: center;
-    overflow: hidden;
-  }
-  .recycler-hero-left {
-    padding: 80px 64px 80px 80px;
-    color: white;
-  }
-  .recycler-hero-left .section-label { color: var(--green); }
-  .recycler-hero-right {
-    position: relative; height: 70vh; overflow: hidden;
-  }
-  .recycler-hero-right img {
-    width: 100%; height: 100%; object-fit: cover;
-    filter: brightness(0.6);
-  }
-  .recycler-hero-right-overlay {
-    position: absolute; inset: 0;
-    background: linear-gradient(to right, var(--navy) 0%, transparent 30%);
-  }
+/* WALLET */
+.wallet{padding:80px;background:var(--off);}
+.wcard{background:linear-gradient(135deg,var(--navy) 0%,var(--teal) 100%);border-radius:22px;padding:42px;color:#fff;max-width:680px;margin-bottom:36px;position:relative;overflow:hidden;}
+.wcard::before{content:'';position:absolute;top:-70px;right:-70px;width:260px;height:260px;border-radius:50%;background:rgba(255,255,255,.05);}
+.w-lbl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;opacity:.52;margin-bottom:7px;}
+.w-bal{font-family:'Cabinet Grotesk',sans-serif;font-weight:900;font-size:58px;letter-spacing:-2px;line-height:1;margin-bottom:5px;}
+.w-eq{font-size:13px;opacity:.5;margin-bottom:28px;}
+.w-btns{display:flex;gap:12px;}
+.w-btn{padding:11px 22px;border-radius:10px;font-family:'Satoshi',sans-serif;font-size:14px;font-weight:700;cursor:pointer;border:none;transition:opacity .2s;}
+.w-btn:hover{opacity:.8;}
+.redeem-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:48px;}
+.rd{background:#fff;border:1px solid var(--border);border-radius:16px;padding:22px 16px;text-align:center;cursor:pointer;transition:all .2s;}
+.rd:hover{border-color:var(--teal);transform:translateY(-2px);box-shadow:0 8px 24px rgba(95,155,140,.1);}
+.rd-icon{width:46px;height:46px;border-radius:12px;margin:0 auto 10px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;color:#fff;}
+.rd h4{font-size:13px;font-weight:700;color:var(--navy);margin-bottom:2px;}
+.rd p{font-size:11px;color:var(--tl);}
 
-  /* DASHBOARD */
-  .dashboard-section {
-    padding: 80px;
-    background: var(--off-white);
-  }
-  .dashboard-grid {
-    display: grid; grid-template-columns: repeat(4, 1fr);
-    gap: 20px; margin-bottom: 48px;
-  }
-  .dash-card {
-    background: white;
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 24px;
-  }
-  .dash-card-label {
-    font-size: 12px; font-weight: 600;
-    text-transform: uppercase; letter-spacing: 0.8px;
-    color: var(--text-light); margin-bottom: 8px;
-  }
-  .dash-card-value {
-    font-family: 'Cabinet Grotesk', sans-serif;
-    font-size: 32px; font-weight: 900;
-    letter-spacing: -1px; line-height: 1; margin-bottom: 4px;
-  }
-  .dash-card:nth-child(1) .dash-card-value { color: var(--teal); }
-  .dash-card:nth-child(2) .dash-card-value { color: var(--orange); }
-  .dash-card:nth-child(3) .dash-card-value { color: var(--navy); }
-  .dash-card:nth-child(4) .dash-card-value { color: var(--teal); }
-  .dash-card-change {
-    font-size: 12px; font-weight: 600;
-    display: inline-flex; align-items: center; gap: 4px;
-  }
-  .dash-card-change.up { color: #2e9e5b; }
+/* TXN */
+.txn-sec{padding:0 80px 80px;}
+.txn-tbl{background:#fff;border:1px solid var(--border);border-radius:16px;overflow:hidden;margin-top:26px;}
+.txn-r{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;padding:14px 22px;align-items:center;border-bottom:1px solid var(--border);transition:background .15s;}
+.txn-r:last-child{border-bottom:none;}
+.txn-r:hover{background:var(--off);}
+.txn-h{background:var(--off);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--tl);}
+.txn-h:hover{background:var(--off);}
+.t-item{font-size:14px;font-weight:600;color:var(--navy);}
+.t-date{font-size:12px;color:var(--tl);}
+.t-kg{font-size:13px;color:var(--tm);}
+.t-pts{font-size:14px;font-weight:700;color:var(--teal);}
 
-  /* INCOMING REQUESTS */
-  .requests-section {
-    padding: 0 80px 80px;
-  }
-  .requests-grid {
-    display: grid; grid-template-columns: repeat(3, 1fr);
-    gap: 20px; margin-top: 32px;
-  }
-  .request-card {
-    background: white;
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 24px;
-    transition: all 0.2s;
-  }
-  .request-card:hover {
-    box-shadow: 0 8px 24px rgba(0,0,0,0.06);
-    transform: translateY(-2px);
-  }
-  .request-header {
-    display: flex; justify-content: space-between; align-items: center;
-    margin-bottom: 16px;
-  }
-  .request-id { font-size: 12px; font-weight: 700; color: var(--text-light); }
-  .request-status {
-    font-size: 11px; font-weight: 700;
-    padding: 4px 10px; border-radius: 100px;
-    text-transform: uppercase; letter-spacing: 0.5px;
-  }
-  .request-status.pending { background: rgba(250,200,70,0.15); color: #a07800; }
-  .request-status.new { background: rgba(95,155,140,0.12); color: var(--teal); }
-  .request-location { font-size: 15px; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
-  .request-items { font-size: 13px; color: var(--text-mid); margin-bottom: 16px; line-height: 1.5; }
-  .request-footer {
-    display: flex; gap: 10px; align-items: center;
-    justify-content: space-between;
-  }
-  .request-weight {
-    font-size: 13px; font-weight: 600;
-    color: var(--text-mid);
-    background: var(--off-white);
-    padding: 6px 12px; border-radius: 8px;
-  }
-  .request-accept {
-    background: var(--teal); color: white;
-    border: none; border-radius: 8px;
-    padding: 8px 20px;
-    font-size: 13px; font-weight: 600;
-    cursor: pointer; transition: all 0.2s;
-  }
-  .request-accept:hover { background: var(--navy); }
-  .request-decline {
-    background: none; color: var(--text-light);
-    border: 1px solid var(--border); border-radius: 8px;
-    padding: 8px 14px;
-    font-size: 13px; font-weight: 600;
-    cursor: pointer; transition: all 0.2s;
-  }
+/* ===================== RECYCLER PAGE ===================== */
+.rec-hero{padding-top:66px;display:grid;grid-template-columns:1fr 1fr;min-height:65vh;background:linear-gradient(135deg,var(--navy) 0%,#1b3040 100%);overflow:hidden;}
+.rh-l{padding:72px 56px 72px 80px;display:flex;flex-direction:column;justify-content:center;gap:20px;color:#fff;}
+.rh-r{position:relative;overflow:hidden;}
+.rh-r img{width:100%;height:100%;object-fit:cover;filter:brightness(.55);}
+.rh-r-ov{position:absolute;inset:0;background:linear-gradient(to right,var(--navy) 0%,transparent 28%);}
 
-  /* EPR SECTION */
-  .epr-section {
-    padding: 80px;
-    background: white;
-    display: grid; grid-template-columns: 1fr 1fr;
-    gap: 80px; align-items: center;
-  }
-  .epr-img {
-    border-radius: 24px; overflow: hidden; height: 420px;
-  }
-  .epr-img img {
-    width: 100%; height: 100%; object-fit: cover;
-  }
-  .plan-cards {
-    display: flex; flex-direction: column; gap: 16px;
-    margin-top: 32px;
-  }
-  .plan-card {
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 24px;
-    display: flex; justify-content: space-between; align-items: center;
-    transition: all 0.2s;
-    cursor: pointer;
-  }
-  .plan-card:hover { border-color: var(--orange); }
-  .plan-card.featured {
-    background: var(--navy); border-color: var(--navy);
-    color: white;
-  }
-  .plan-name { font-size: 17px; font-weight: 700; margin-bottom: 4px; }
-  .plan-desc { font-size: 13px; opacity: 0.6; }
-  .plan-price {
-    font-family: 'Cabinet Grotesk', sans-serif;
-    font-size: 22px; font-weight: 900;
-    color: var(--orange);
-    text-align: right;
-  }
-  .plan-price span { font-size: 13px; font-weight: 400; opacity: 0.7; }
+/* DASH */
+.dash{padding:80px;background:var(--off);}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-bottom:44px;}
+.kpi{background:#fff;border:1px solid var(--border);border-radius:16px;padding:22px;}
+.kpi-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--tl);margin-bottom:7px;}
+.kpi-val{font-family:'Cabinet Grotesk',sans-serif;font-weight:900;font-size:32px;letter-spacing:-1px;line-height:1;margin-bottom:4px;}
+.kpi:nth-child(1) .kpi-val{color:var(--teal);}
+.kpi:nth-child(2) .kpi-val{color:var(--orange);}
+.kpi:nth-child(3) .kpi-val{color:var(--navy);}
+.kpi:nth-child(4) .kpi-val{color:var(--teal);}
+.kpi-ch{font-size:12px;font-weight:600;}
+.kpi-ch.up{color:#2a9d5c;}
+.kpi-ch.al{color:var(--orange);}
+.tabs{display:flex;gap:4px;background:var(--off);border:1px solid var(--border);border-radius:12px;padding:4px;width:fit-content;margin-bottom:34px;}
+.tab{padding:9px 18px;border-radius:8px;font-size:13px;font-weight:600;color:var(--tl);cursor:pointer;border:none;background:none;font-family:'Satoshi',sans-serif;transition:all .2s;}
+.tab.act{background:#fff;color:var(--navy);box-shadow:0 2px 8px rgba(0,0,0,.07);}
 
-  /* BACK BUTTON */
-  .back-btn {
-    display: inline-flex; align-items: center; gap: 8px;
-    background: none;
-    border: none;
-    font-family: 'Satoshi', sans-serif;
-    font-size: 14px; font-weight: 600;
-    color: rgba(255,255,255,0.7);
-    cursor: pointer;
-    padding: 0; margin-bottom: 24px;
-    transition: color 0.2s;
-  }
-  .back-btn:hover { color: white; }
-  .back-btn-dark {
-    color: var(--text-mid);
-  }
-  .back-btn-dark:hover { color: var(--teal); }
+/* REQUESTS */
+.reqs{padding:0 80px 80px;}
+.req-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:22px;}
+.req{background:#fff;border:1px solid var(--border);border-radius:18px;padding:22px;transition:all .2s;}
+.req:hover{box-shadow:0 8px 24px rgba(0,0,0,.07);transform:translateY(-2px);}
+.req-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
+.req-id{font-size:11px;font-weight:700;color:var(--tl);}
+.req-st{font-size:10px;font-weight:700;padding:4px 10px;border-radius:100px;text-transform:uppercase;letter-spacing:.4px;}
+.s-n{background:rgba(95,155,140,.12);color:var(--teal);}
+.s-p{background:rgba(250,200,70,.18);color:#9a7200;}
+.req-loc{font-size:15px;font-weight:700;color:var(--navy);margin-bottom:4px;}
+.req-items{font-size:13px;color:var(--tm);line-height:1.5;margin-bottom:14px;}
+.req-foot{display:flex;justify-content:space-between;align-items:center;}
+.req-kg{font-size:12px;font-weight:600;background:var(--off);padding:5px 11px;border-radius:8px;color:var(--tm);}
+.req-acts{display:flex;gap:7px;}
+.r-acc{background:var(--teal);color:#fff;border:none;border-radius:8px;padding:7px 16px;font-size:12px;font-weight:700;cursor:pointer;transition:background .2s;}
+.r-acc:hover{background:var(--navy);}
+.r-skip{background:none;color:var(--tl);border:1px solid var(--border);border-radius:8px;padding:7px 12px;font-size:12px;font-weight:600;cursor:pointer;}
 
-  /* TABS */
-  .tabs {
-    display: flex; gap: 4px;
-    background: var(--off-white);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 4px;
-    max-width: fit-content;
-    margin-bottom: 40px;
-  }
-  .tab {
-    padding: 10px 20px; border-radius: 8px;
-    font-size: 14px; font-weight: 600;
-    color: var(--text-light);
-    cursor: pointer; transition: all 0.2s;
-    border: none; background: none;
-    font-family: 'Satoshi', sans-serif;
-  }
-  .tab.active {
-    background: white;
-    color: var(--navy);
-    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-  }
+/* PLANS */
+.plans{padding:80px;background:#fff;display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:start;}
+.plan-img{border-radius:22px;overflow:hidden;height:400px;}
+.plan-img img{width:100%;height:100%;object-fit:cover;}
+.plan-cards{display:flex;flex-direction:column;gap:13px;margin-top:28px;}
+.pcard{border:1.5px solid var(--border);border-radius:16px;padding:20px 22px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;transition:all .2s;}
+.pcard:hover{border-color:var(--orange);}
+.pcard.feat{background:var(--navy);border-color:var(--navy);color:#fff;}
+.p-name{font-family:'Cabinet Grotesk',sans-serif;font-weight:800;font-size:17px;margin-bottom:2px;}
+.p-desc{font-size:13px;opacity:.5;}
+.p-price{font-family:'Cabinet Grotesk',sans-serif;font-weight:900;font-size:21px;color:var(--orange);text-align:right;white-space:nowrap;}
+.p-price span{font-size:12px;font-weight:500;opacity:.6;}
 
-  /* SCROLL ANIMATIONS */
-  .fade-in {
-    opacity: 0; transform: translateY(24px);
-    transition: opacity 0.6s, transform 0.6s;
-  }
-  .fade-in.visible {
-    opacity: 1; transform: translateY(0);
-  }
+/* MARKET */
+.market{padding:100px 80px;background:var(--navy);}
 
-  @media (max-width: 1024px) {
-    nav { padding: 0 24px; }
-    .hero, .user-page-hero, .recycler-page-hero { grid-template-columns: 1fr; }
-    .hero-right, .user-hero-right, .recycler-hero-right { display: none; }
-    .hero-left, .user-hero-left, .recycler-hero-left { padding: 80px 32px 60px; }
-    .role-section, .impact-section, .how-section, .rewards-section,
-    .awareness-section, .schedule-section, .wallet-section, .txn-section,
-    .recyclers-section, .dashboard-section, .requests-section, .epr-section { padding: 60px 32px; }
-    .role-cards, .impact-grid, .recyclers-grid, .requests-grid, .redeem-options { grid-template-columns: 1fr; }
-    .steps-grid { grid-template-columns: 1fr; gap: 24px; }
-    .steps-grid::before { display: none; }
-    .rewards-section, .epr-section, .awareness-section { grid-template-columns: 1fr; }
-    footer { flex-direction: column; gap: 16px; text-align: center; padding: 40px 24px; }
-    .dashboard-grid { grid-template-columns: 1fr 1fr; }
-  }
+/* BACK */
+.back{display:inline-flex;align-items:center;gap:7px;background:none;border:none;font-family:'Satoshi',sans-serif;font-size:13px;font-weight:600;cursor:pointer;padding:0;margin-bottom:20px;transition:color .2s;}
+.back-lt{color:rgba(255,255,255,.5);}.back-lt:hover{color:#fff;}
+.back-dk{color:var(--tl);}.back-dk:hover{color:var(--teal);}
+
+/* RESPONSIVE */
+@media(max-width:1060px){
+  nav{padding:0 20px;}
+  .hero,.u-hero,.rec-hero{grid-template-columns:1fr;}
+  .hero-r,.uh-r,.rh-r{display:none;}
+  .hero-l,.uh-l,.rh-l{padding:72px 24px 52px;}
+  .roles,.cats,.impact,.how,.aware,.testi,.sched,.r-list,.wallet,.txn-sec,.dash,.reqs,.plans,.market{padding:56px 24px;}
+  .rewards{grid-template-columns:1fr;}
+  .rew-img{display:none;}
+  .cats-grid{grid-template-columns:repeat(2,1fr);}
+  .imp-grid,.testi-grid,.req-grid,.r-grid,.redeem-grid,.role-grid{grid-template-columns:1fr;}
+  .how-grid{grid-template-columns:1fr;gap:26px;}
+  .how-grid::after{display:none;}
+  .aware{grid-template-columns:1fr;}
+  .kpis{grid-template-columns:1fr 1fr;}
+  .plans{grid-template-columns:1fr;}
+  .plan-img{display:none;}
+  .sched-wrap{grid-template-columns:1fr;}
+  .ft{grid-template-columns:1fr 1fr;}
+  footer{padding:36px 24px 20px;}
+}
 </style>
 </head>
 <body>
 
 <!-- NAV -->
 <nav>
-  <div class="nav-logo" onclick="showPage('home')">Re<span>Wire</span></div>
-  <ul class="nav-links" id="main-nav">
-    <li><a onclick="scrollToEl('how-it-works')">How it Works</a></li>
-    <li><a onclick="scrollToEl('impact-section')">Impact</a></li>
-    <li><a onclick="scrollToEl('rewards-section')">Rewards</a></li>
-    <li><a onclick="showPage('user')" class="nav-cta">Schedule Pickup</a></li>
+  <div class="logo" onclick="goPage('home')">Re<span>Wire</span></div>
+  <ul class="nav-links">
+    <li><a onclick="goSec('how')">How it Works</a></li>
+    <li><a onclick="goSec('cats')">What We Accept</a></li>
+    <li><a onclick="goSec('impact')">Impact</a></li>
+    <li><a onclick="goPage('user')" class="ncta">Schedule Pickup</a></li>
   </ul>
 </nav>
 
 
-<!-- =================== HOME PAGE =================== -->
+<!-- ======================================================= HOME ======================================================= -->
 <div class="page active" id="page-home">
 
   <!-- HERO -->
   <section class="hero">
-    <div class="hero-left">
-      <div class="hero-badge">
-        <div class="hero-badge-dot"></div>
-        <span>Now live in Asansol</span>
-      </div>
-      <h1 class="hero-title">
-        <strong>ReWire</strong><br>
-        <span class="accent">Turn your<br>e-waste</span><br>
-        into <span class="accent-orange">rewards.</span>
-      </h1>
-      <p class="hero-tagline">Doorstep e-waste collection with instant cash rewards. Schedule a pickup in 60 seconds — we come to you.</p>
-      <div class="hero-cta-group">
-        <button class="btn-primary" onclick="showPage('user')">
-          Schedule Free Pickup
-          <span>→</span>
-        </button>
-        <button class="btn-secondary" onclick="showPage('recycler')">
-          I'm a Recycler
-        </button>
-      </div>
-      <div class="hero-stats">
-        <div class="hero-stat">
-          <div class="hero-stat-number">3.2M+</div>
-          <div class="hero-stat-label">Tonnes / Year</div>
-        </div>
-        <div class="hero-stat">
-          <div class="hero-stat-number">&lt;5%</div>
-          <div class="hero-stat-label">Formally Recycled</div>
-        </div>
-        <div class="hero-stat">
-          <div class="hero-stat-number">50+</div>
-          <div class="hero-stat-label">Verified Recyclers</div>
-        </div>
+    <div class="hero-l">
+      <div class="hero-badge"><div class="badge-dot"></div><span>Now active in Asansol</span></div>
+      <h1 class="sh sh-xl">
+  <span class="hero-rewire">ReWire</span><br>
+  Turn your<br>
+  <span style="color:var(--teal);">e-waste</span><br>
+  into <span style="color:var(--orange);">rewards.</span>
+</h1>
+    
+      <p class="sub">Free doorstep e-waste collection for households across Asansol. Schedule a pickup in 60 seconds — our verified agents come to you and pay you instantly.</p>
+      <div class="hero-btns">
+        <button class="btn btn-teal" onclick="goPage('user')">Schedule Free Pickup →</button>
+        <button class="btn btn-outline" onclick="goPage('recycler')">I'm a Recycler</button>
       </div>
     </div>
-    <div class="hero-right">
-      <img src="https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?w=900&q=80" alt="E-waste recycling">
-      <div class="hero-right-overlay"></div>
-      <div class="hero-right-card">
-        <div class="hero-right-card-title">Avg. Payout Per Pickup</div>
-        <div class="hero-right-card-value">₹ 340</div>
-        <div class="hero-right-card-sub">Redeemable as cash or vouchers</div>
+    <div class="hero-r">
+      <img src="https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?w=1000&q=80" alt="E-waste recycling">
+      <div class="hero-r-ov"></div>
+      <div class="hero-card">
+        <div class="hc-lbl">Avg. Payout Per Pickup</div>
+        <div class="hc-val">₹ 340</div>
+        <div class="hc-sub">Redeemable as UPI cash or vouchers</div>
       </div>
     </div>
   </section>
 
-  <!-- ROLE SELECTOR -->
-  <section class="role-section" id="role-section">
-    <div class="section-label">Get Started</div>
-    <h2 class="section-title">Who are you?</h2>
-    <div class="role-cards">
-      <div class="role-card user-card" onclick="showPage('user')">
-        <div class="role-icon green">
-          <svg width="24" height="24" fill="none" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" stroke="#5F9B8C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 22V12h6v10" stroke="#5F9B8C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  <!-- MARQUEE -->
+  <div class="mq">
+    <div class="mq-track">
+      <div class="mq-item"><div class="mq-dot"></div>Free doorstep pickup</div>
+      <div class="mq-item"><div class="mq-dot"></div>Instant UPI cash rewards</div>
+      <div class="mq-item"><div class="mq-dot"></div>CPCB-authorised recyclers only</div>
+      <div class="mq-item"><div class="mq-dot"></div>E-Waste Rules 2022 compliant</div>
+      <div class="mq-item"><div class="mq-dot"></div>Zero data risk — devices wiped</div>
+      <div class="mq-item"><div class="mq-dot"></div>All e-waste accepted — dead or alive</div>
+      <div class="mq-item"><div class="mq-dot"></div>Same-day slots available</div>
+      <div class="mq-item"><div class="mq-dot"></div>Serving Asansol · Burnpur · Kulti · Raniganj</div>
+      <div class="mq-item"><div class="mq-dot"></div>Free doorstep pickup</div>
+      <div class="mq-item"><div class="mq-dot"></div>Instant UPI cash rewards</div>
+      <div class="mq-item"><div class="mq-dot"></div>CPCB-authorised recyclers only</div>
+      <div class="mq-item"><div class="mq-dot"></div>E-Waste Rules 2022 compliant</div>
+      <div class="mq-item"><div class="mq-dot"></div>Zero data risk — devices wiped</div>
+      <div class="mq-item"><div class="mq-dot"></div>All e-waste accepted — dead or alive</div>
+      <div class="mq-item"><div class="mq-dot"></div>Same-day slots available</div>
+      <div class="mq-item"><div class="mq-dot"></div>Serving Asansol · Burnpur · Kulti · Raniganj</div>
+    </div>
+  </div>
+
+  <!-- WHO ARE YOU -->
+  <section class="roles" id="roles">
+    <div class="lbl">Get Started</div>
+    <h2 class="sh sh-lg">Who are you?</h2>
+    <div class="role-grid">
+      <div class="role-card rc-u" onclick="goPage('user')">
+        <div class="rc-img">
+          <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80" alt="Household">
+          <div class="rc-tint"></div>
         </div>
-        <h3>Household / Seller</h3>
-        <p>Have old phones, dead batteries, or broken electronics gathering dust? Schedule a free doorstep pickup and earn instant rewards.</p>
-        <div class="role-card-cta">
-          Get started <span class="role-card-arrow">→</span>
+        <div class="rc-body">
+          <h3>Household / Seller</h3>
+          <p>Have old phones, dead batteries, or broken electronics gathering dust? Schedule a free doorstep pickup — our agent comes to you, assesses on-site, and pays you instantly.</p>
+          <div class="rc-cta">Schedule a free pickup <span>→</span></div>
         </div>
       </div>
-      <div class="role-card recycler-card" onclick="showPage('recycler')">
-        <div class="role-icon orange">
-          <svg width="24" height="24" fill="none" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z" stroke="#FF7D2D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <div class="role-card rc-b" onclick="goPage('recycler')">
+        <div class="rc-img">
+          <img src="https://images.unsplash.com/photo-1611284446314-60a58ac0deb9?w=800&q=80" alt="Recycler">
+          <div class="rc-tint"></div>
         </div>
-        <h3>Recycler / Business</h3>
-        <p>Access a verified, organized supply of e-waste delivered to your facility. Join 50+ recyclers already growing with ReWire in the Asansol district.</p>
-        <div class="role-card-cta">
-          Partner with us <span class="role-card-arrow">→</span>
+        <div class="rc-body">
+          <h3>Recycler / Business</h3>
+          <p>Access a verified, organised supply of e-waste delivered to your facility. Join recyclers already growing with ReWire across the Asansol-Durgapur industrial corridor.</p>
+          <div class="rc-cta">Partner with ReWire <span>→</span></div>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- CATEGORIES -->
+  <section class="cats" id="cats">
+    <div class="lbl">What We Accept</div>
+    <h2 class="sh sh-lg">We take everything<br>electronic.</h2>
+    <p class="sub" style="margin-top:10px;max-width:560px;">Dead or alive, broken or working — if it ever had a plug or a battery, we'll pick it up and pay you for it.</p>
+    <div class="cats-grid">
+      <div class="cat fade">
+        <div class="cat-img"><img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=500&q=80" alt="Smartphones"></div>
+        <div class="cat-body"><div class="cat-name">Smartphones & Tablets</div><div class="cat-rate">Up to ₹ 90 / kg</div></div>
+        <div class="cat-tag">Top earner</div>
+      </div>
+      <div class="cat fade d1">
+        <div class="cat-img"><img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=500&q=80" alt="Laptops"></div>
+        <div class="cat-body"><div class="cat-name">Laptops & Computers</div><div class="cat-rate">Up to ₹ 70 / kg</div></div>
+      </div>
+      <div class="cat fade d2">
+        <div class="cat-img"><img src="https://cdn.thewirecutter.com/wp-content/media/2022/12/lightningcables-2048px-2460-2x1-1.jpg?auto=webp&quality=75&crop=1.91:1&width=1200" alt="Cables"></div>
+        <div class="cat-body"><div class="cat-name">Cables & Chargers</div><div class="cat-rate">Up to ₹ 35 / kg</div></div>
+      </div>
+      <div class="cat fade d3">
+        <div class="cat-img"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR25t0C6k9sV0CxEkKhoPmvDOTdX2lqmR1Dow&s" alt="Batteries"></div>
+        <div class="cat-body"><div class="cat-name">Batteries & Power Banks</div><div class="cat-rate">Up to ₹ 30 / kg</div></div>
+      </div>
+      <div class="cat fade">
+        <div class="cat-img"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/Cptvdisplay.jpg/500px-Cptvdisplay.jpg" alt="Televisions"></div>
+        <div class="cat-body"><div class="cat-name">Televisions & Monitors</div><div class="cat-rate">Up to ₹ 20 / kg</div></div>
+      </div>
+      <div class="cat fade d1">
+        <div class="cat-img"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIKuBJBGDaupe7GXpG4q5hXhUp5CYw2UoZlg&s" alt="Keyboards"></div>
+        <div class="cat-body"><div class="cat-name">Keyboards, Mice & Peripherals</div><div class="cat-rate">Up to ₹ 18 / kg</div></div>
+      </div>
+      <div class="cat fade d2">
+        <div class="cat-img"><img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=500&q=80" alt="Circuit boards"></div>
+        <div class="cat-body"><div class="cat-name">Circuit Boards & Components</div><div class="cat-rate">Up to ₹ 120 / kg</div></div>
+        <div class="cat-tag cat-tag-o">Highest rate</div>
+      </div>
+      <div class="cat fade d3">
+        <div class="cat-img"><img src="https://images.unsplash.com/photo-1556909212-d5b604d0c90d?w=500&q=80" alt="Appliances"></div>
+        <div class="cat-body"><div class="cat-name">Kitchen & Home Appliances</div><div class="cat-rate">Up to ₹ 15 / kg</div></div>
+      </div>
+    </div>
+    <div style="margin-top:36px;">
+      <button class="btn btn-teal" onclick="goPage('user')">Check All Rates & Schedule Pickup →</button>
     </div>
   </section>
 
   <!-- IMPACT -->
-  <section class="impact-section" id="impact-section">
-    <div class="section-label">The Problem</div>
-    <h2 class="section-title">India's e-waste<br>crisis is real.</h2>
-    <div class="impact-grid">
-      <div class="impact-card fade-in">
-        <div class="impact-number">3.2M</div>
-        <h4>Metric tonnes generated annually</h4>
-        <p>India is the world's third-largest producer of e-waste, yet the vast majority never reaches a formal recycler.</p>
+  <section class="impact" id="impact">
+    <div class="lbl lbl-w">The Problem</div>
+    <h2 class="sh sh-lg sh-w">India's e-waste<br>crisis demands action.</h2>
+    <div class="imp-grid">
+      <div class="ic fade">
+        <div class="ic-num">3.2M</div>
+        <h4>Metric tonnes generated every year</h4>
+        <p>India is the world's third-largest producer of e-waste. The volume grows over 30% every three years as smartphone and appliance adoption surges.</p>
       </div>
-      <div class="impact-card fade-in">
-        <div class="impact-number">&lt;5%</div>
+      <div class="ic fade d1">
+        <div class="ic-num">&lt;5%</div>
         <h4>Formally recycled in India</h4>
-        <p>The rest ends up in landfills or with informal scrap dealers who use unsafe methods, releasing lead and mercury into soil and groundwater.</p>
+        <p>The rest ends up in landfills or with informal scrap dealers using unsafe methods — releasing lead, mercury, and cadmium into soil and groundwater.</p>
       </div>
-      <div class="impact-card fade-in">
-        <div class="impact-number">20–30km</div>
-        <h4>To the nearest drop-off point</h4>
-        <p>The average household in Asansol must travel over 20 km to reach an authorised recycling centre — with zero financial incentive to make the trip.</p>
+      <div class="ic fade d2">
+        <div class="ic-num">20 km+</div>
+        <h4>Average distance to a drop-off point</h4>
+        <p>The nearest authorised recycling centre requires a round-trip most people won't make. ReWire removes that barrier — we come to your door.</p>
       </div>
     </div>
   </section>
 
   <!-- HOW IT WORKS -->
-  <section class="how-section" id="how-it-works">
-    <div class="section-label">The Process</div>
-    <h2 class="section-title">Five steps to a<br>cleaner home.</h2>
-    <div class="steps-grid">
-      <div class="step-item fade-in">
-        <div class="step-circle">1</div>
-        <div class="step-title">Schedule</div>
-        <div class="step-desc">List your e-waste and pick a date and time that works for you.</div>
-      </div>
-      <div class="step-item fade-in">
-        <div class="step-circle">2</div>
-        <div class="step-title">Select</div>
-        <div class="step-desc">Browse verified local recyclers and their reward rates.</div>
-      </div>
-      <div class="step-item fade-in">
-        <div class="step-circle">3</div>
-        <div class="step-title">Collect</div>
-        <div class="step-desc">A registered agent arrives at your door to assess and collect the waste.</div>
-      </div>
-      <div class="step-item fade-in">
-        <div class="step-circle">4</div>
-        <div class="step-title">Confirm</div>
-        <div class="step-desc">Agent scans your QR code, instantly crediting your reward points.</div>
-      </div>
-      <div class="step-item fade-in">
-        <div class="step-circle">5</div>
-        <div class="step-title">Redeem</div>
-        <div class="step-desc">Cash out via UPI or exchange for brand vouchers — instantly.</div>
-      </div>
+  <section class="how" id="how">
+    <div class="lbl">The Process</div>
+    <h2 class="sh sh-lg">Five steps, zero hassle.</h2>
+    <div class="how-grid">
+      <div class="how-step fade"><div class="how-num">1</div><h4>Schedule</h4><p>List your e-waste and pick a date and time slot.</p></div>
+      <div class="how-step hs-act fade d1"><div class="how-num">2</div><h4>Select</h4><p>Browse verified recyclers and compare rates.</p></div>
+      <div class="how-step fade d2"><div class="how-num">3</div><h4>Collect</h4><p>A registered agent comes to your door and assesses on the spot.</p></div>
+      <div class="how-step fade d3"><div class="how-num">4</div><h4>Confirm</h4><p>Agent scans your QR — reward points credited instantly.</p></div>
+      <div class="how-step fade d4"><div class="how-num">5</div><h4>Redeem</h4><p>Withdraw as UPI cash or swap for brand vouchers.</p></div>
     </div>
   </section>
 
   <!-- REWARDS -->
-  <section class="rewards-section" id="rewards-section">
-    <div class="rewards-img">
-      <img src="https://images.unsplash.com/photo-1601597111158-2fceff292cdc?w=700&q=80" alt="Rewards and cash">
-      <div class="rewards-img-overlay"></div>
-      <div class="reward-pill-group">
-        <div class="reward-pill"><div class="reward-pill-dot" style="background:#FF7D2D"></div>Swiggy Voucher</div>
-        <div class="reward-pill"><div class="reward-pill-dot" style="background:#FAC846"></div>Amazon Pay</div>
-        <div class="reward-pill"><div class="reward-pill-dot" style="background:#5F9B8C"></div>Direct Bank Transfer</div>
-        <div class="reward-pill"><div class="reward-pill-dot" style="background:#A0C382"></div>UPI Cashout</div>
+  <section class="rewards" id="rewards">
+    <div class="rew-img">
+      <img src="https://images.unsplash.com/photo-1601597111158-2fceff292cdc?w=800&q=80" alt="Rewards">
+      <div class="rew-tint"></div>
+      <div class="rew-pills">
+        <div class="rpill"><div class="rpd" style="background:#FF7D2D;"></div>Swiggy</div>
+        <div class="rpill"><div class="rpd" style="background:#FAC846;"></div>Amazon Pay</div>
+        <div class="rpill"><div class="rpd" style="background:#5F9B8C;"></div>UPI Transfer</div>
+        <div class="rpill"><div class="rpd" style="background:#A0C382;"></div>Flipkart</div>
       </div>
     </div>
-    <div class="reward-features">
-      <div class="section-label">Instant Rewards</div>
-      <h2 class="section-title" style="font-size:40px;">Your old charger<br>is worth real money.</h2>
-      <div class="reward-item">
-        <div class="reward-item-icon" style="background:rgba(95,155,140,0.1);">
-          <svg width="22" height="22" fill="none" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="#5F9B8C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <div class="rew-content">
+      <div class="lbl">Instant Rewards</div>
+      <h2 class="sh sh-md">Your old charger<br>is worth real money.</h2>
+      <div class="rw-row">
+        <div class="rw-icon" style="background:rgba(95,155,140,.1);">
+          <svg width="20" height="20" fill="none" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="#5F9B8C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </div>
-        <div class="reward-item-text">
-          <h4>Weight-based assessment</h4>
-          <p>Every gram counts. Your reward is calculated based on the type, weight, and condition of your e-waste — transparently, on the spot.</p>
-        </div>
+        <div class="rw-text"><h4>Weight-based assessment on the spot</h4><p>Every gram counts. Rewards are calculated based on the type, weight, and condition of your e-waste — transparently, right in front of you.</p></div>
       </div>
-      <div class="reward-item">
-        <div class="reward-item-icon" style="background:rgba(255,125,45,0.1);">
-          <svg width="22" height="22" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="#FF7D2D" stroke-width="2"/><path d="M12 6v6l4 2" stroke="#FF7D2D" stroke-width="2" stroke-linecap="round"/></svg>
+      <div class="rw-row">
+        <div class="rw-icon" style="background:rgba(255,125,45,.1);">
+          <svg width="20" height="20" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="#FF7D2D" stroke-width="2"/><path d="M12 6v6l4 2" stroke="#FF7D2D" stroke-width="2" stroke-linecap="round"/></svg>
         </div>
-        <div class="reward-item-text">
-          <h4>Instant credit, no waiting</h4>
-          <p>The moment the agent scans the QR code, your ReWire Reward Points are credited. No delays, no paperwork, no chasing payments.</p>
-        </div>
+        <div class="rw-text"><h4>Points credited the moment of handover</h4><p>No waiting. The second the QR is scanned, your ReWire Rewards are live in your wallet — no paperwork, no delays, no chasing.</p></div>
       </div>
-      <div class="reward-item">
-        <div class="reward-item-icon" style="background:rgba(250,200,70,0.1);">
-          <svg width="22" height="22" fill="none" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2" stroke="#FAC846" stroke-width="2"/><path d="M2 10h20" stroke="#FAC846" stroke-width="2"/></svg>
+      <div class="rw-row">
+        <div class="rw-icon" style="background:rgba(250,200,70,.1);">
+          <svg width="20" height="20" fill="none" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2" stroke="#FAC846" stroke-width="2"/><path d="M2 10h20" stroke="#FAC846" stroke-width="2"/></svg>
         </div>
-        <div class="reward-item-text">
-          <h4>Flexible redemption</h4>
-          <p>Convert points to direct bank/UPI cash via Razorpay, or redeem for Swiggy, Amazon, Flipkart, and more partner vouchers.</p>
-        </div>
+        <div class="rw-text"><h4>Cash out or redeem — your choice</h4><p>Transfer directly to UPI/bank via Razorpay, or redeem instantly for Swiggy, Amazon, Flipkart, and more partner vouchers.</p></div>
       </div>
+      <button class="btn btn-teal" onclick="goPage('user')" style="width:fit-content;margin-top:6px;">Start Earning →</button>
     </div>
   </section>
 
-  <!-- AWARENESS BANNER -->
-  <section class="awareness-section">
-    <div class="awareness-text">
-      <h2>It's not just the right thing to do — it's the law.</h2>
-      <p>Under India's E-Waste Management Rules 2022, disposing of electronics in regular trash is illegal. These rules mandate strict Extended Producer Responsibility (EPR) quotas, creating a massive, government-backed market for organised e-waste collection. ReWire is your easiest path to compliance — and to earning from it.</p>
+  <!-- AWARENESS -->
+  <section class="aware">
+    <div>
+      <div class="aw-h">It's not just the right thing.<br>It's the law.</div>
+      <div class="aw-p">Under India's E-Waste Management Rules 2022, disposing of electronics in regular trash is illegal. The rules mandate strict Extended Producer Responsibility (EPR) quotas, creating a government-backed market for organised e-waste collection. ReWire makes compliance effortless — and rewarding.</div>
     </div>
-    <div class="awareness-badges">
-      <div class="awareness-badge">
-        <div class="awareness-badge-icon">⚖️</div>
-        <div class="awareness-badge-text">E-Waste Rules 2022 Compliant</div>
+    <div class="aw-tags">
+      <div class="aw-tag"><span style="font-size:17px;">⚖️</span><span>E-Waste Rules 2022 Compliant</span></div>
+      <div class="aw-tag"><span style="font-size:17px;">✅</span><span>CPCB Authorised Recyclers Only</span></div>
+      <div class="aw-tag"><span style="font-size:17px;">🔒</span><span>Zero Data Risk — Devices Wiped</span></div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="testi">
+    <div class="lbl">What People Say</div>
+    <h2 class="sh sh-md">Trusted across Asansol.</h2>
+    <div class="testi-grid">
+      <div class="tc fade">
+        <div class="tc-stars">★★★★★</div>
+        <div class="tc-text">"I had three old phones and a laptop sitting in a drawer for two years. Scheduled a pickup, the agent arrived on time, and I got ₹640 credited to my Paytm within minutes. Genuinely surprised."</div>
+        <div class="tc-auth">
+          <img class="tc-av" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&q=80" alt="Rahul">
+          <div><div class="tc-name">Rahul Sharma</div><div class="tc-loc">Station Road, Asansol</div></div>
+        </div>
       </div>
-      <div class="awareness-badge">
-        <div class="awareness-badge-icon">✅</div>
-        <div class="awareness-badge-text">CPCB Authorised Recyclers Only</div>
+      <div class="tc fade d1">
+        <div class="tc-stars">★★★★★</div>
+        <div class="tc-text">"Finally a proper solution for e-waste in Asansol. The agent was professional, explained the process clearly, and the Amazon voucher was in my account before he left the building."</div>
+        <div class="tc-auth">
+          <img class="tc-av" src="https://images.unsplash.com/photo-1494790108755-2616b612b47c?w=80&q=80" alt="Priya">
+          <div><div class="tc-name">Priya Datta</div><div class="tc-loc">Burnpur</div></div>
+        </div>
       </div>
-      <div class="awareness-badge">
-        <div class="awareness-badge-icon">🔒</div>
-        <div class="awareness-badge-text">Zero Data Risk — Devices Wiped</div>
+      <div class="tc fade d2">
+        <div class="tc-stars">★★★★☆</div>
+        <div class="tc-text">"We had a whole box of old office equipment — monitors, keyboards, routers. ReWire picked everything up in one trip. Got the equivalent in vouchers. Very smooth, very efficient."</div>
+        <div class="tc-auth">
+          <img class="tc-av" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&q=80" alt="Mehul">
+          <div><div class="tc-name">Mehul Agarwal</div><div class="tc-loc">Kulti Market</div></div>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- FOOTER -->
   <footer>
-    <div class="footer-logo">Re<span>Wire</span></div>
-    <p>© 2026 ReWire. Asansol, West Bengal, India.</p>
-    <div class="footer-links">
-      <a>Privacy Policy</a>
-      <a>Terms of Service</a>
-      <a>Contact</a>
+    <div class="ft">
+      <div class="fb">
+        <div class="logo" style="color:#fff;">Re<span>Wire</span></div>
+        <p>Doorstep e-waste collection with instant rewards. Serving Asansol, Burnpur, Kulti, and Raniganj.</p>
+      </div>
+      <div class="fc"><h5>For Users</h5><a onclick="goPage('user')">Schedule Pickup</a><a onclick="goSec('cats')">What We Accept</a><a onclick="goSec('rewards')">Rewards</a></div>
+      <div class="fc"><h5>For Recyclers</h5><a onclick="goPage('recycler')">Partner Dashboard</a><a>EPR Services</a><a>Subscription Plans</a></div>
+      <div class="fc"><h5>Company</h5><a>About ReWire</a><a>Privacy Policy</a><a>Contact Us</a></div>
     </div>
+    <div class="fb-bot"><p>© 2026 ReWire Technologies. Asansol, West Bengal.</p><p>CPCB Registered · E-Waste Rules 2022</p></div>
   </footer>
 </div>
 
 
-<!-- =================== USER PAGE =================== -->
+<!-- ======================================================= USER PAGE ======================================================= -->
 <div class="page" id="page-user">
 
-  <!-- HERO -->
-  <section class="user-page-hero">
-    <div class="user-hero-left">
-      <button class="back-btn" onclick="showPage('home')">← Back to Home</button>
-      <div class="section-label" style="color:var(--teal)">For Households</div>
-      <h1 class="hero-title" style="font-size:clamp(40px,4vw,60px)">
-        Schedule your<br><span class="accent">free pickup.</span>
-      </h1>
-      <p class="hero-tagline" style="font-size:16px; margin-top:16px;">
-        We operate across Asansol, Burnpur, Kulti, and Raniganj. Our verified agents arrive at your scheduled time — you just hand over the waste and collect your rewards.
-      </p>
+  <section class="u-hero">
+    <div class="uh-l">
+      <button class="back back-dk" onclick="goPage('home')">← Back to Home</button>
+      <div class="lbl">For Households</div>
+      <h1 class="sh sh-lg">Schedule your<br><span style="color:var(--teal);">free pickup.</span></h1>
+      <p class="sub" style="font-size:15px;">We cover Asansol, Burnpur, Kulti, Raniganj, Barakar, and Chittaranjan. Fill in the form — your estimated reward updates live as you type.</p>
     </div>
-    <div class="user-hero-right">
-      <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=700&q=80" alt="Doorstep collection">
-      <div class="user-hero-right-overlay"></div>
+    <div class="uh-r">
+      <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=900&q=80" alt="Pickup">
+      <div class="uh-r-ov"></div>
     </div>
   </section>
 
   <!-- SCHEDULE FORM -->
-  <section class="schedule-section" id="schedule-section">
-    <div class="section-label">Step 1</div>
-    <h2 class="section-title" style="font-size:40px;">Tell us what you have.</h2>
-    <div class="schedule-form">
-      <div class="form-row">
-        <div class="form-group">
-          <label>Full Name</label>
-          <input type="text" placeholder="Rahul Sharma" value="Rahul Sharma">
+  <section class="sched">
+    <div class="lbl">Step 1 of 2</div>
+    <h2 class="sh sh-md" style="margin-bottom:32px;">Tell us what you have.</h2>
+    <div class="sched-wrap">
+      <div class="sched-form">
+        <div class="f-row">
+          <div class="f-g"><label>Full Name</label><input type="text" id="f-name" placeholder="Your name" oninput="calcReward()"></div>
+          <div class="f-g"><label>Phone</label><input type="tel" id="f-phone" placeholder="+91 98765 43210"></div>
         </div>
-        <div class="form-group">
-          <label>Phone Number</label>
-          <input type="tel" placeholder="+91 98765 43210" value="+91 98765 43210">
+        <div class="f-row">
+          <div class="f-g">
+            <label>Area / Locality</label>
+            <select id="f-area" onchange="calcReward()">
+              <option value="">Select area…</option>
+              <option>Asansol — Station Road</option>
+              <option>Asansol — G.T. Road</option>
+              <option>Burnpur</option>
+              <option>Kulti</option>
+              <option>Raniganj</option>
+              <option>Barakar</option>
+              <option>Chittaranjan</option>
+            </select>
+          </div>
+          <div class="f-g"><label>Preferred Date</label><input type="date" id="f-date" oninput="calcReward()"></div>
         </div>
+        <div class="f-row">
+          <div class="f-g">
+            <label>E-Waste Category</label>
+            <select id="f-cat" onchange="calcReward()">
+              <option value="">Select category…</option>
+              <option value="90">Smartphones / Tablets — ₹90/kg</option>
+              <option value="70">Laptops / Computers — ₹70/kg</option>
+              <option value="35">Cables & Chargers — ₹35/kg</option>
+              <option value="30">Batteries & Power Banks — ₹30/kg</option>
+              <option value="20">Televisions / Monitors — ₹20/kg</option>
+              <option value="120">Circuit Boards — ₹120/kg</option>
+              <option value="18">Keyboards & Peripherals — ₹18/kg</option>
+              <option value="15">Kitchen Appliances — ₹15/kg</option>
+              <option value="45">Mixed E-Waste — ₹45/kg</option>
+            </select>
+          </div>
+          <div class="f-g"><label>Estimated Weight (kg)</label><input type="number" id="f-wt" placeholder="e.g. 2.5" min="0.1" step="0.1" oninput="calcReward()"></div>
+        </div>
+        <button class="btn btn-teal" style="width:100%;justify-content:center;margin-top:10px;" onclick="showRecyclers()">Find Recyclers Near Me →</button>
       </div>
-      <div class="form-row">
-        <div class="form-group">
-          <label>Area / Locality</label>
-          <select>
-            <option>Asansol — Station Road</option>
-            <option>Burnpur</option>
-            <option>Kulti</option>
-            <option>Raniganj</option>
-            <option>Barakar</option>
-            <option>Chittaranjan</option>
-          </select>
+      <!-- LIVE PREVIEW -->
+      <div class="preview-card">
+        <div class="prev-title">Your Pickup Summary</div>
+        <div class="prev-row"><div class="prev-lbl">Location</div><div class="prev-val" id="p-area">—</div></div>
+        <div class="prev-row"><div class="prev-lbl">Category</div><div class="prev-val" id="p-cat">—</div></div>
+        <div class="prev-row"><div class="prev-lbl">Weight</div><div class="prev-val" id="p-wt">—</div></div>
+        <div class="prev-row"><div class="prev-lbl">Rate</div><div class="prev-val" id="p-rate">—</div></div>
+        <div class="prev-row" style="border-top:1px solid rgba(255,255,255,.14);padding-top:18px;margin-top:4px;">
+          <div class="prev-lbl" style="font-size:13px;font-weight:700;color:rgba(255,255,255,.65);">Estimated Reward</div>
+          <div class="prev-reward" id="p-reward">₹ —</div>
         </div>
-        <div class="form-group">
-          <label>Preferred Date</label>
-          <input type="date" value="2026-05-03">
-        </div>
+        <div class="prev-note">Final amount confirmed on pickup by agent and credited instantly via QR scan.</div>
       </div>
-      <div class="form-row">
-        <div class="form-group">
-          <label>E-Waste Category</label>
-          <select>
-            <option>Mixed (phones, cables, batteries)</option>
-            <option>Smartphones / Tablets</option>
-            <option>Laptops / Computers</option>
-            <option>Batteries / Power Banks</option>
-            <option>Cables & Chargers</option>
-            <option>Kitchen Appliances</option>
-            <option>Televisions / Monitors</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label>Estimated Weight</label>
-          <select>
-            <option>Less than 1 kg</option>
-            <option selected>1 – 5 kg</option>
-            <option>5 – 15 kg</option>
-            <option>More than 15 kg</option>
-          </select>
-        </div>
-      </div>
-      <button class="btn-primary" style="width:100%; justify-content:center; margin-top:8px;" onclick="showSection('recyclers-section')">
-        Find Recyclers Near Me →
-      </button>
     </div>
   </section>
 
   <!-- RECYCLERS -->
-  <section class="recyclers-section" id="recyclers-section-el">
-    <div class="section-label">Step 2</div>
-    <h2 class="section-title" style="font-size:40px; color:var(--navy)">Choose your recycler.</h2>
-    <p style="color:var(--text-mid); font-size:15px; margin-bottom:0; margin-top:-32px;">All partners are CPCB-authorised. Rates shown are per kilogram.</p>
-    <div class="recyclers-grid">
-      <!-- Card 1 -->
-      <div class="recycler-card-item selected" onclick="selectRecycler(this)">
-        <div class="recycler-header">
-          <div>
-            <div class="recycler-name">GreenCycle Asansol</div>
-            <div class="stars">★★★★★ <span style="color:var(--text-light);font-size:12px;">(218 reviews)</span></div>
-          </div>
-          <div class="recycler-badge">Top Rated</div>
-        </div>
-        <div class="recycler-meta">
-          <div class="recycler-meta-item">📍 2.4 km away</div>
-          <div class="recycler-meta-item">⚡ Same-day pickup</div>
-        </div>
-        <div class="recycler-rates">
-          <div class="recycler-rate-row"><span class="rate-label">Smartphones</span><span class="rate-value">₹ 80/kg</span></div>
-          <div class="recycler-rate-row"><span class="rate-label">Cables & Chargers</span><span class="rate-value">₹ 30/kg</span></div>
-          <div class="recycler-rate-row"><span class="rate-label">Batteries</span><span class="rate-value">₹ 25/kg</span></div>
+  <section class="r-list" id="recyclers-sec" style="display:none;">
+    <div class="lbl">Step 2 of 2</div>
+    <h2 class="sh sh-md">Choose your recycler.</h2>
+    <p style="color:var(--tm);font-size:14px;margin-top:8px;">All partners are CPCB-authorised. Rates per kg shown below.</p>
+    <div class="r-grid">
+      <div class="r-card sel" onclick="selRecycler(this,'GreenCycle Asansol')">
+        <div class="r-top"><div><div class="r-name">GreenCycle Asansol</div><div class="stars">★★★★★ <span style="color:var(--tl);font-size:10px;">(218 reviews)</span></div></div><div class="r-b" style="background:rgba(95,155,140,.12);color:var(--teal);">Top Rated</div></div>
+        <div class="r-meta"><span>📍 2.4 km</span><span>⚡ Same-day</span></div>
+        <div class="r-rates">
+          <div class="r-rr"><span class="r-rl">Smartphones</span><span class="r-rv">₹ 80/kg</span></div>
+          <div class="r-rr"><span class="r-rl">Cables</span><span class="r-rv">₹ 30/kg</span></div>
+          <div class="r-rr"><span class="r-rl">Batteries</span><span class="r-rv">₹ 25/kg</span></div>
         </div>
       </div>
-      <!-- Card 2 -->
-      <div class="recycler-card-item" onclick="selectRecycler(this)">
-        <div class="recycler-header">
-          <div>
-            <div class="recycler-name">Prakriti Recyclers Pvt.</div>
-            <div class="stars">★★★★☆ <span style="color:var(--text-light);font-size:12px;">(134 reviews)</span></div>
-          </div>
-          <div class="recycler-badge" style="background:rgba(250,200,70,0.15);color:#a07800;">Fast Pickup</div>
-        </div>
-        <div class="recycler-meta">
-          <div class="recycler-meta-item">📍 4.1 km away</div>
-          <div class="recycler-meta-item">⏱ 2-hour slots</div>
-        </div>
-        <div class="recycler-rates">
-          <div class="recycler-rate-row"><span class="rate-label">Smartphones</span><span class="rate-value">₹ 75/kg</span></div>
-          <div class="recycler-rate-row"><span class="rate-label">Cables & Chargers</span><span class="rate-value">₹ 28/kg</span></div>
-          <div class="recycler-rate-row"><span class="rate-label">Batteries</span><span class="rate-value">₹ 22/kg</span></div>
+      <div class="r-card" onclick="selRecycler(this,'Prakriti Recyclers')">
+        <div class="r-top"><div><div class="r-name">Prakriti Recyclers Pvt.</div><div class="stars">★★★★☆ <span style="color:var(--tl);font-size:10px;">(134 reviews)</span></div></div><div class="r-b" style="background:rgba(250,200,70,.15);color:#9a7200;">Fast Pickup</div></div>
+        <div class="r-meta"><span>📍 4.1 km</span><span>⏱ 2-hr slots</span></div>
+        <div class="r-rates">
+          <div class="r-rr"><span class="r-rl">Smartphones</span><span class="r-rv">₹ 75/kg</span></div>
+          <div class="r-rr"><span class="r-rl">Cables</span><span class="r-rv">₹ 28/kg</span></div>
+          <div class="r-rr"><span class="r-rl">Batteries</span><span class="r-rv">₹ 22/kg</span></div>
         </div>
       </div>
-      <!-- Card 3 -->
-      <div class="recycler-card-item" onclick="selectRecycler(this)">
-        <div class="recycler-header">
-          <div>
-            <div class="recycler-name">E-Renew Burnpur</div>
-            <div class="stars">★★★★☆ <span style="color:var(--text-light);font-size:12px;">(89 reviews)</span></div>
-          </div>
-          <div class="recycler-badge" style="background:rgba(160,195,130,0.15);color:#4a7a30;">Best Rates</div>
-        </div>
-        <div class="recycler-meta">
-          <div class="recycler-meta-item">📍 6.7 km away</div>
-          <div class="recycler-meta-item">🔋 All types accepted</div>
-        </div>
-        <div class="recycler-rates">
-          <div class="recycler-rate-row"><span class="rate-label">Smartphones</span><span class="rate-value">₹ 90/kg</span></div>
-          <div class="recycler-rate-row"><span class="rate-label">Cables & Chargers</span><span class="rate-value">₹ 35/kg</span></div>
-          <div class="recycler-rate-row"><span class="rate-label">Batteries</span><span class="rate-value">₹ 30/kg</span></div>
+      <div class="r-card" onclick="selRecycler(this,'E-Renew Burnpur')">
+        <div class="r-top"><div><div class="r-name">E-Renew Burnpur</div><div class="stars">★★★★☆ <span style="color:var(--tl);font-size:10px;">(89 reviews)</span></div></div><div class="r-b" style="background:rgba(160,195,130,.18);color:#3d7020;">Best Rates</div></div>
+        <div class="r-meta"><span>📍 6.7 km</span><span>🔋 All types</span></div>
+        <div class="r-rates">
+          <div class="r-rr"><span class="r-rl">Smartphones</span><span class="r-rv">₹ 90/kg</span></div>
+          <div class="r-rr"><span class="r-rl">Cables</span><span class="r-rv">₹ 35/kg</span></div>
+          <div class="r-rr"><span class="r-rl">Batteries</span><span class="r-rv">₹ 30/kg</span></div>
         </div>
       </div>
     </div>
-    <div style="margin-top:40px; display:flex; gap:16px;">
-      <button class="btn-primary" onclick="confirmPickup()">Confirm Pickup with GreenCycle →</button>
+    <div style="margin-top:30px;display:flex;gap:14px;align-items:center;">
+      <button class="btn btn-teal" id="confirm-btn" onclick="confirmPickup()">Confirm Pickup with GreenCycle →</button>
     </div>
   </section>
 
   <!-- WALLET -->
-  <section class="wallet-section">
-    <div class="section-label">Your Wallet</div>
-    <h2 class="section-title" style="font-size:40px;">Rewards ready to use.</h2>
-
-    <div class="wallet-card">
-      <div class="wallet-balance-label">Available Balance</div>
-      <div class="wallet-balance">₹ 1,240</div>
-      <div class="wallet-equiv">= 1,240 ReWire Points &nbsp;·&nbsp; Earned from 4 pickups</div>
-      <div class="wallet-actions">
-        <button class="wallet-btn wallet-btn-primary">Withdraw to UPI</button>
-        <button class="wallet-btn wallet-btn-secondary">Redeem Voucher</button>
+  <section class="wallet">
+    <div class="lbl">Your Wallet</div>
+    <h2 class="sh sh-md" style="margin-bottom:28px;">Rewards ready to use.</h2>
+    <div class="wcard">
+      <div class="w-lbl">Available Balance</div>
+      <div class="w-bal" id="w-bal">₹ 1,240</div>
+      <div class="w-eq" id="w-eq">= 1,240 ReWire Points · Earned from 4 pickups</div>
+      <div class="w-btns">
+        <button class="w-btn" style="background:#fff;color:var(--navy);">Withdraw to UPI</button>
+        <button class="w-btn" style="background:rgba(255,255,255,.14);color:#fff;border:1px solid rgba(255,255,255,.25);">Redeem Voucher</button>
       </div>
     </div>
-
-    <div class="section-label" style="margin-bottom:16px;">Redeem For</div>
-    <div class="redeem-options">
-      <div class="redeem-option">
-        <div class="redeem-option-icon" style="background:#FF7D2D;">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/Swiggy_logo.png/320px-Swiggy_logo.png" style="width:28px;height:auto;filter:brightness(0) invert(1);" alt="Swiggy">
-        </div>
-        <h4>Swiggy</h4>
-        <p>Food vouchers</p>
-      </div>
-      <div class="redeem-option">
-        <div class="redeem-option-icon" style="background:#FF9900;">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Amazon_logo.svg/320px-Amazon_logo.svg.png" style="width:28px;height:auto;filter:brightness(0) invert(1);" alt="Amazon">
-        </div>
-        <h4>Amazon Pay</h4>
-        <p>Shopping credits</p>
-      </div>
-      <div class="redeem-option">
-        <div class="redeem-option-icon" style="background:#2874F0;">
-          <span style="color:white;font-weight:900;font-size:14px;">Fk</span>
-        </div>
-        <h4>Flipkart</h4>
-        <p>Shopping credits</p>
-      </div>
-      <div class="redeem-option">
-        <div class="redeem-option-icon" style="background:#5F9B8C;">
-          <svg width="20" height="20" fill="none" viewBox="0 0 24 24"><path d="M12 2v20M2 12h20" stroke="white" stroke-width="2.5" stroke-linecap="round"/></svg>
-        </div>
-        <h4>Bank Transfer</h4>
-        <p>via Razorpay</p>
-      </div>
+    <div class="lbl" style="margin-bottom:14px;">Redeem For</div>
+    <div class="redeem-grid">
+      <div class="rd"><div class="rd-icon" style="background:#FF6B00;">SW</div><h4>Swiggy</h4><p>Food vouchers</p></div>
+      <div class="rd"><div class="rd-icon" style="background:#FF9900;">AMZ</div><h4>Amazon Pay</h4><p>Shopping credits</p></div>
+      <div class="rd"><div class="rd-icon" style="background:#2874F0;">FK</div><h4>Flipkart</h4><p>Shopping credits</p></div>
+      <div class="rd"><div class="rd-icon" style="background:var(--teal);"><svg width="18" height="18" fill="none" viewBox="0 0 24 24"><path d="M12 2v20M2 12h20" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/></svg></div><h4>Bank Transfer</h4><p>via Razorpay</p></div>
     </div>
   </section>
 
-  <!-- TRANSACTION HISTORY -->
-  <section class="txn-section">
-    <div class="section-label">History</div>
-    <h2 class="section-title" style="font-size:36px;">Past Pickups</h2>
-    <div class="txn-table">
-      <div class="txn-row header">
-        <div>Item</div><div>Date</div><div>Weight</div><div>Points Earned</div>
-      </div>
-      <div class="txn-row">
-        <div class="txn-item">Smartphones (×3)</div>
-        <div class="txn-date">18 Apr 2026</div>
-        <div class="txn-kg">0.72 kg</div>
-        <div class="txn-points">+₹ 580</div>
-      </div>
-      <div class="txn-row">
-        <div class="txn-item">Cables & Chargers</div>
-        <div class="txn-date">5 Mar 2026</div>
-        <div class="txn-kg">1.20 kg</div>
-        <div class="txn-points">+₹ 336</div>
-      </div>
-      <div class="txn-row">
-        <div class="txn-item">Laptop Battery + Adaptor</div>
-        <div class="txn-date">14 Feb 2026</div>
-        <div class="txn-kg">0.95 kg</div>
-        <div class="txn-points">+₹ 240</div>
-      </div>
-      <div class="txn-row">
-        <div class="txn-item">Dead Power Bank (×2)</div>
-        <div class="txn-date">22 Jan 2026</div>
-        <div class="txn-kg">0.43 kg</div>
-        <div class="txn-points">+₹ 84</div>
-      </div>
+  <!-- TRANSACTIONS -->
+  <section class="txn-sec">
+    <div class="lbl">History</div>
+    <h2 class="sh sh-md" style="margin-bottom:0;">Past Pickups</h2>
+    <div class="txn-tbl" id="txn-tbl">
+      <div class="txn-r txn-h"><div>Item</div><div>Date</div><div>Weight</div><div>Earned</div></div>
+      <div class="txn-r"><div class="t-item">Smartphones (×3)</div><div class="t-date">18 Apr 2026</div><div class="t-kg">0.72 kg</div><div class="t-pts">+₹ 580</div></div>
+      <div class="txn-r"><div class="t-item">Cables & Chargers</div><div class="t-date">5 Mar 2026</div><div class="t-kg">1.20 kg</div><div class="t-pts">+₹ 336</div></div>
+      <div class="txn-r"><div class="t-item">Laptop + Adaptor</div><div class="t-date">14 Feb 2026</div><div class="t-kg">0.95 kg</div><div class="t-pts">+₹ 240</div></div>
+      <div class="txn-r"><div class="t-item">Power Banks (×2)</div><div class="t-date">22 Jan 2026</div><div class="t-kg">0.43 kg</div><div class="t-pts">+₹ 84</div></div>
     </div>
   </section>
 
   <footer>
-    <div class="footer-logo">Re<span>Wire</span></div>
-    <p>© 2026 ReWire. Asansol, West Bengal, India.</p>
-    <div class="footer-links">
-      <a>Privacy Policy</a>
-      <a>Terms of Service</a>
-      <a>Contact</a>
+    <div class="ft">
+      <div class="fb"><div class="logo" style="color:#fff;">Re<span>Wire</span></div><p>Doorstep e-waste collection with instant rewards. Serving Asansol district.</p></div>
+      <div class="fc"><h5>Quick Links</h5><a onclick="goPage('home')">Home</a><a onclick="goPage('recycler')">For Recyclers</a><a>Contact</a></div>
+      <div class="fc"><h5>Legal</h5><a>Privacy Policy</a><a>Terms of Service</a><a>E-Waste Rules 2022</a></div>
+      <div class="fc"><h5>Asansol Office</h5><a>Station Road, Asansol</a><a>West Bengal — 713301</a><a>hello@rewire.in</a></div>
     </div>
+    <div class="fb-bot"><p>© 2026 ReWire Technologies.</p><p>CPCB Registered · E-Waste Rules 2022</p></div>
   </footer>
 </div>
 
 
-<!-- =================== RECYCLER PAGE =================== -->
+<!-- ======================================================= RECYCLER PAGE ======================================================= -->
 <div class="page" id="page-recycler">
 
-  <!-- HERO -->
-  <section class="recycler-page-hero">
-    <div class="recycler-hero-left">
-      <button class="back-btn" onclick="showPage('home')">← Back to Home</button>
-      <div class="section-label">For Businesses & Recyclers</div>
-      <h1 class="hero-title" style="color:white; font-size:clamp(40px,4vw,60px);">
-        A verified, doorstep<br><span style="color:var(--green);">supply pipeline.</span>
-      </h1>
-      <p style="font-size:16px; color:rgba(255,255,255,0.65); line-height:1.6; margin-top:16px; max-width:480px;">
-        Stop relying on unpredictable informal channels. ReWire delivers sorted, assessed e-waste directly to your facility from verified households across Asansol district.
-      </p>
-      <div style="margin-top:32px; display:flex; gap:16px; flex-wrap:wrap;">
-        <button class="btn-primary" onclick="">Apply to Partner</button>
-        <button class="btn-secondary" style="color:white;border-color:rgba(255,255,255,0.2);" onclick="">Download Rate Card</button>
+  <section class="rec-hero">
+    <div class="rh-l">
+      <button class="back back-lt" onclick="goPage('home')">← Back to Home</button>
+      <div class="lbl lbl-w">For Businesses & Recyclers</div>
+      <h1 class="sh sh-lg sh-w">A verified,<br><span style="color:var(--green);">doorstep supply<br>pipeline.</span></h1>
+      <p class="sub sub-white" style="font-size:15px; color: white;">Stop relying on unpredictable informal channels. ReWire delivers sorted, assessed e-waste directly from verified households across Asansol district.</p>
+      <div style="display:flex;gap:14px;flex-wrap:wrap;">
+        <button class="btn btn-teal">Apply to Partner</button>
+        <button class="btn btn-ghost">Download Rate Card</button>
       </div>
     </div>
-    <div class="recycler-hero-right">
-      <img src="https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=700&q=80" alt="Recycling facility">
-      <div class="recycler-hero-right-overlay"></div>
+    <div class="rh-r">
+      <img src="https://t3.ftcdn.net/jpg/05/00/96/84/360_F_500968458_OGyQ9bVX0iG18R74csP1JBAvtxxaGYgs.jpg" alt="Recycling facility">
+      <div class="rh-r-ov"></div>
     </div>
   </section>
 
   <!-- DASHBOARD -->
-  <section class="dashboard-section">
-    <div class="section-label">Partner Dashboard</div>
-    <h2 class="section-title" style="font-size:40px; margin-bottom:0;">GreenCycle Asansol</h2>
-    <p style="color:var(--text-mid); margin-bottom:40px; font-size:15px;">April 2026 — Active partner since March 2025</p>
-
-    <div class="dashboard-grid">
-      <div class="dash-card">
-        <div class="dash-card-label">Total Collected (Apr)</div>
-        <div class="dash-card-value">2,340</div>
-        <div style="font-size:13px;color:var(--text-light);">kg this month</div>
-        <div class="dash-card-change up" style="margin-top:8px;">↑ 18% vs last month</div>
-      </div>
-      <div class="dash-card">
-        <div class="dash-card-label">Pending Requests</div>
-        <div class="dash-card-value">14</div>
-        <div style="font-size:13px;color:var(--text-light);">awaiting acceptance</div>
-        <div class="dash-card-change up" style="margin-top:8px; color:var(--orange);">● 3 urgent today</div>
-      </div>
-      <div class="dash-card">
-        <div class="dash-card-label">Agent Pickups</div>
-        <div class="dash-card-value">87</div>
-        <div style="font-size:13px;color:var(--text-light);">completed this month</div>
-        <div class="dash-card-change up" style="margin-top:8px;">↑ 12 vs last month</div>
-      </div>
-      <div class="dash-card">
-        <div class="dash-card-label">Platform Rating</div>
-        <div class="dash-card-value">4.9</div>
-        <div style="font-size:13px;color:var(--text-light);">out of 5.0</div>
-        <div class="stars" style="margin-top:8px;">★★★★★</div>
-      </div>
+  <section class="dash">
+    <div class="lbl">Partner Dashboard</div>
+    <h2 class="sh sh-md" style="margin-bottom:4px;">GreenCycle Asansol</h2>
+    <p style="color:var(--tm);font-size:14px;margin-bottom:32px;">April 2026 · Active partner since March 2025</p>
+    <div class="kpis">
+      <div class="kpi"><div class="kpi-lbl">Collected (Apr)</div><div class="kpi-val" id="kpi-kg">2,340 kg</div><div class="kpi-ch up">↑ 18% vs last month</div></div>
+      <div class="kpi"><div class="kpi-lbl">Pending Requests</div><div class="kpi-val" id="kpi-pend">14</div><div class="kpi-ch al">● 3 urgent today</div></div>
+      <div class="kpi"><div class="kpi-lbl">Pickups Completed</div><div class="kpi-val">87</div><div class="kpi-ch up">↑ 12 vs last month</div></div>
+      <div class="kpi"><div class="kpi-lbl">Platform Rating</div><div class="kpi-val">4.9 ★</div><div class="kpi-ch up">Top 5% of partners</div></div>
     </div>
-
-    <!-- Tabs -->
     <div class="tabs">
-      <button class="tab active" onclick="switchTab(this, 'tab-requests')">Incoming Requests</button>
-      <button class="tab" onclick="switchTab(this, 'tab-agents')">Field Agents</button>
-      <button class="tab" onclick="switchTab(this, 'tab-analytics')">Analytics</button>
+      <button class="tab act" onclick="switchTab(this,'tab-reqs')">Incoming Requests</button>
+      <button class="tab" onclick="switchTab(this,'tab-agents')">Field Agents</button>
+      <button class="tab" onclick="switchTab(this,'tab-analytics')">Analytics</button>
     </div>
   </section>
 
-  <!-- TAB: REQUESTS -->
-  <section class="requests-section" id="tab-requests">
-    <div class="section-label">New Requests</div>
-    <h2 class="section-title" style="font-size:36px;">Incoming Pickups</h2>
-    <div class="requests-grid">
-      <div class="request-card">
-        <div class="request-header">
-          <div class="request-id">REQ-0482</div>
-          <div class="request-status new">New</div>
-        </div>
-        <div class="request-location">G.T. Road, Asansol</div>
-        <div class="request-items">3 smartphones, assorted cables, 2 power banks</div>
-        <div class="request-footer">
-          <div class="request-weight">~1.8 kg est.</div>
-          <div style="display:flex;gap:8px;">
-            <button class="request-decline">Skip</button>
-            <button class="request-accept">Accept</button>
-          </div>
-        </div>
-      </div>
-      <div class="request-card">
-        <div class="request-header">
-          <div class="request-id">REQ-0481</div>
-          <div class="request-status new">New</div>
-        </div>
-        <div class="request-location">Burnpur Road, Burnpur</div>
-        <div class="request-items">Old CRT monitor, keyboard, mouse set</div>
-        <div class="request-footer">
-          <div class="request-weight">~6.4 kg est.</div>
-          <div style="display:flex;gap:8px;">
-            <button class="request-decline">Skip</button>
-            <button class="request-accept">Accept</button>
-          </div>
-        </div>
-      </div>
-      <div class="request-card">
-        <div class="request-header">
-          <div class="request-id">REQ-0479</div>
-          <div class="request-status pending">Pending</div>
-        </div>
-        <div class="request-location">Kulti Main Market</div>
-        <div class="request-items">Laptop (dead), 5 mobile batteries, router</div>
-        <div class="request-footer">
-          <div class="request-weight">~2.9 kg est.</div>
-          <div style="display:flex;gap:8px;">
-            <button class="request-decline">Skip</button>
-            <button class="request-accept">Accept</button>
-          </div>
-        </div>
-      </div>
-      <div class="request-card">
-        <div class="request-header">
-          <div class="request-id">REQ-0477</div>
-          <div class="request-status new">New</div>
-        </div>
-        <div class="request-location">Station Road, Asansol</div>
-        <div class="request-items">Mixed household e-waste, approx 2 bags</div>
-        <div class="request-footer">
-          <div class="request-weight">~4.2 kg est.</div>
-          <div style="display:flex;gap:8px;">
-            <button class="request-decline">Skip</button>
-            <button class="request-accept">Accept</button>
-          </div>
-        </div>
-      </div>
-      <div class="request-card">
-        <div class="request-header">
-          <div class="request-id">REQ-0476</div>
-          <div class="request-status pending">Pending</div>
-        </div>
-        <div class="request-location">Raniganj Town Centre</div>
-        <div class="request-items">Microwave (dead), 2 electric irons, cables</div>
-        <div class="request-footer">
-          <div class="request-weight">~8.1 kg est.</div>
-          <div style="display:flex;gap:8px;">
-            <button class="request-decline">Skip</button>
-            <button class="request-accept">Accept</button>
-          </div>
-        </div>
-      </div>
-      <div class="request-card">
-        <div class="request-header">
-          <div class="request-id">REQ-0474</div>
-          <div class="request-status new">New</div>
-        </div>
-        <div class="request-location">Chittaranjan Colony</div>
-        <div class="request-items">Old desktop PC set — full tower + peripherals</div>
-        <div class="request-footer">
-          <div class="request-weight">~11.5 kg est.</div>
-          <div style="display:flex;gap:8px;">
-            <button class="request-decline">Skip</button>
-            <button class="request-accept">Accept</button>
-          </div>
-        </div>
-      </div>
+  <!-- REQUESTS -->
+  <section class="reqs" id="tab-reqs">
+    <h2 class="sh sh-md" style="margin-bottom:16px;">Incoming Pickups</h2>
+    <div class="req-grid">
+      <div class="req"><div class="req-top"><div class="req-id">REQ-0482</div><div class="req-st s-n">New</div></div><div class="req-loc">G.T. Road, Asansol</div><div class="req-items">3 smartphones, assorted cables, 2 power banks</div><div class="req-foot"><div class="req-kg">~1.8 kg</div><div class="req-acts"><button class="r-skip" onclick="skipReq(this)">Skip</button><button class="r-acc" onclick="accReq(this)">Accept</button></div></div></div>
+      <div class="req"><div class="req-top"><div class="req-id">REQ-0481</div><div class="req-st s-n">New</div></div><div class="req-loc">Burnpur Road, Burnpur</div><div class="req-items">Old CRT monitor, keyboard, mouse set</div><div class="req-foot"><div class="req-kg">~6.4 kg</div><div class="req-acts"><button class="r-skip" onclick="skipReq(this)">Skip</button><button class="r-acc" onclick="accReq(this)">Accept</button></div></div></div>
+      <div class="req"><div class="req-top"><div class="req-id">REQ-0479</div><div class="req-st s-p">Pending</div></div><div class="req-loc">Kulti Main Market</div><div class="req-items">Laptop (dead), 5 mobile batteries, router</div><div class="req-foot"><div class="req-kg">~2.9 kg</div><div class="req-acts"><button class="r-skip" onclick="skipReq(this)">Skip</button><button class="r-acc" onclick="accReq(this)">Accept</button></div></div></div>
+      <div class="req"><div class="req-top"><div class="req-id">REQ-0477</div><div class="req-st s-n">New</div></div><div class="req-loc">Station Road, Asansol</div><div class="req-items">Mixed household e-waste, approx 2 bags</div><div class="req-foot"><div class="req-kg">~4.2 kg</div><div class="req-acts"><button class="r-skip" onclick="skipReq(this)">Skip</button><button class="r-acc" onclick="accReq(this)">Accept</button></div></div></div>
+      <div class="req"><div class="req-top"><div class="req-id">REQ-0476</div><div class="req-st s-p">Pending</div></div><div class="req-loc">Raniganj Town Centre</div><div class="req-items">Microwave, 2 electric irons, cables</div><div class="req-foot"><div class="req-kg">~8.1 kg</div><div class="req-acts"><button class="r-skip" onclick="skipReq(this)">Skip</button><button class="r-acc" onclick="accReq(this)">Accept</button></div></div></div>
+      <div class="req"><div class="req-top"><div class="req-id">REQ-0474</div><div class="req-st s-n">New</div></div><div class="req-loc">Chittaranjan Colony</div><div class="req-items">Desktop PC set — full tower + all peripherals</div><div class="req-foot"><div class="req-kg">~11.5 kg</div><div class="req-acts"><button class="r-skip" onclick="skipReq(this)">Skip</button><button class="r-acc" onclick="accReq(this)">Accept</button></div></div></div>
     </div>
   </section>
+  <section id="tab-agents" style="display:none;" class="reqs"><p style="color:var(--tm);font-size:15px;padding:32px 0;">Agent management panel — available in the full platform dashboard.</p></section>
+  <section id="tab-analytics" style="display:none;" class="reqs"><p style="color:var(--tm);font-size:15px;padding:32px 0;">Analytics dashboard — available in the full platform dashboard.</p></section>
 
-  <!-- EPR / PLANS -->
-  <section class="epr-section">
-    <div class="epr-img">
-      <img src="https://images.unsplash.com/photo-1611284446314-60a58ac0deb9?w=600&q=80" alt="EPR compliance factory">
-    </div>
+  <!-- PLANS -->
+  <section class="plans">
+    <div class="plan-img"><img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=700&q=80" alt="EPR factory"></div>
     <div>
-      <div class="section-label">Subscription Plans</div>
-      <h2 class="section-title" style="font-size:36px;">Scale your<br>supply chain.</h2>
-      <p style="color:var(--text-mid); font-size:15px; margin-bottom:0; margin-top:-32px; line-height:1.6;">
-        Upgrade your plan to unlock higher daily pickup limits, priority listing in the app, and EPR compliance reporting for your government quotas.
-      </p>
+      <div class="lbl">Subscription Plans</div>
+      <h2 class="sh sh-md">Scale your supply chain.</h2>
+      <p style="color:var(--tm);font-size:14px;line-height:1.65;margin-top:10px;margin-bottom:0;">Upgrade to unlock higher pickup limits, priority listing, and EPR compliance reporting for government quotas.</p>
       <div class="plan-cards">
-        <div class="plan-card">
-          <div>
-            <div class="plan-name">Starter</div>
-            <div class="plan-desc">Up to 20 pickups/month · Basic listing</div>
-          </div>
-          <div class="plan-price">Free</div>
-        </div>
-        <div class="plan-card featured">
-          <div>
-            <div class="plan-name">Pro</div>
-            <div class="plan-desc" style="color:rgba(255,255,255,0.5);">100 pickups/month · Priority listing · Analytics</div>
-          </div>
-          <div class="plan-price">₹2,999 <span>/mo</span></div>
-        </div>
-        <div class="plan-card">
-          <div>
-            <div class="plan-name">Enterprise + EPR</div>
-            <div class="plan-desc">Unlimited · EPR quota reporting · B2B contracts</div>
-          </div>
-          <div class="plan-price">Custom <span>pricing</span></div>
-        </div>
+        <div class="pcard"><div><div class="p-name" style="color:var(--navy);">Starter</div><div class="p-desc" style="color:var(--tl);">Up to 20 pickups/month · Basic listing</div></div><div class="p-price">Free</div></div>
+        <div class="pcard feat"><div><div class="p-name">Pro</div><div class="p-desc">100 pickups/month · Priority listing · Analytics</div></div><div class="p-price">₹2,999 <span>/mo</span></div></div>
+        <div class="pcard"><div><div class="p-name" style="color:var(--navy);">Enterprise + EPR</div><div class="p-desc" style="color:var(--tl);">Unlimited · EPR quota reporting · B2B contracts</div></div><div class="p-price">Custom <span>pricing</span></div></div>
       </div>
     </div>
   </section>
 
-  <!-- MARKET SECTION -->
-  <section class="impact-section" style="background:var(--navy);">
-    <div class="section-label">Market Opportunity</div>
-    <h2 class="section-title" style="color:white; font-size:40px;">The demand is<br>government-mandated.</h2>
-    <div class="impact-grid">
-      <div class="impact-card">
-        <div class="impact-number" style="color:var(--yellow);">95%</div>
-        <h4>Informal sector today</h4>
-        <p>95% of India's e-waste is still handled by unorganised scrap dealers. ReWire converts this into a formal, verifiable supply chain you can rely on.</p>
-      </div>
-      <div class="impact-card">
-        <div class="impact-number" style="color:var(--green);">60%</div>
-        <h4>Government recycling target by FY2025</h4>
-        <p>India's E-Waste Rules mandate a 60% recycling rate target. Producers and recyclers need an organised collection network to meet these quotas — that's ReWire.</p>
-      </div>
-      <div class="impact-card">
-        <div class="impact-number" style="color:var(--orange);">₹62B</div>
-        <h4>Worth of unrecovered materials globally</h4>
-        <p>Every tonne of e-waste contains recoverable gold, copper, and rare earth elements. Our structured supply gives you access to higher-quality, better-sorted raw materials.</p>
-      </div>
+  <!-- MARKET -->
+  <section class="market">
+    <div class="lbl lbl-w">Market Opportunity</div>
+    <h2 class="sh sh-lg sh-w">The demand is<br>government-mandated.</h2>
+    <div class="imp-grid" style="margin-top:48px;">
+      <div class="ic fade"><div class="ic-num" style="color:var(--yellow);">95%</div><h4>Informal sector today</h4><p>95% of India's e-waste is still handled by unorganised scrap dealers. ReWire converts this chaos into a formal, verifiable supply chain you can count on.</p></div>
+      <div class="ic fade d1"><div class="ic-num" style="color:var(--green);">60%</div><h4>Govt. recycling target — FY2025</h4><p>India's E-Waste Rules mandate a 60% recycling rate target. Producers and recyclers need organised collection to meet these quotas — that's exactly what ReWire delivers.</p></div>
+      <div class="ic fade d2"><div class="ic-num" style="color:var(--orange);">₹62B</div><h4>Worth of unrecovered materials globally</h4><p>Every tonne of e-waste contains recoverable gold, copper, and rare earth elements. Our structured supply gives you access to better-sorted, higher-value raw materials.</p></div>
     </div>
   </section>
 
   <footer>
-    <div class="footer-logo">Re<span>Wire</span></div>
-    <p>© 2026 ReWire. Asansol, West Bengal, India.</p>
-    <div class="footer-links">
-      <a>Privacy Policy</a>
-      <a>Partner Agreement</a>
-      <a>Contact</a>
+    <div class="ft">
+      <div class="fb"><div class="logo" style="color:#fff;">Re<span>Wire</span></div><p>Organised e-waste supply for formal recyclers across Asansol district.</p></div>
+      <div class="fc"><h5>Quick Links</h5><a onclick="goPage('home')">Home</a><a onclick="goPage('user')">For Households</a><a>Contact</a></div>
+      <div class="fc"><h5>Legal</h5><a>Privacy Policy</a><a>Partner Agreement</a><a>EPR Compliance</a></div>
+      <div class="fc"><h5>Asansol Office</h5><a>Station Road, Asansol</a><a>West Bengal — 713301</a><a>partners@rewire.in</a></div>
     </div>
+    <div class="fb-bot"><p>© 2026 ReWire Technologies.</p><p>CPCB Registered · E-Waste Rules 2022</p></div>
   </footer>
 </div>
 
-
 <script>
-  // PAGE ROUTING
-  function showPage(page) {
-    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    document.getElementById('page-' + page).classList.add('active');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-    initFadeIns();
+/* ---- PAGE ROUTING ---- */
+function goPage(p){
+  document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
+  document.getElementById('page-'+p).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+  setTimeout(initFades,100);
+}
+function goSec(id){
+  // If not on home, go home first
+  if(!document.getElementById('page-home').classList.contains('active')){
+    goPage('home');
+    setTimeout(()=>{const el=document.getElementById(id);if(el)el.scrollIntoView({behavior:'smooth',block:'start'});},400);
+  } else {
+    const el=document.getElementById(id);
+    if(el)el.scrollIntoView({behavior:'smooth',block:'start'});
   }
+}
 
-  function scrollToEl(id) {
-    const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+/* ---- CATEGORY MAP ---- */
+const CAT_NAME={
+  '90':'Smartphones / Tablets','70':'Laptops / Computers','35':'Cables & Chargers',
+  '30':'Batteries & Power Banks','20':'Televisions / Monitors','120':'Circuit Boards',
+  '18':'Keyboards & Peripherals','15':'Kitchen Appliances','45':'Mixed E-Waste'
+};
+
+/* ---- LIVE REWARD CALC ---- */
+let currentPickupEarned = 0;
+
+function calcReward(){
+  const area = document.getElementById('f-area').value;
+  const catEl = document.getElementById('f-cat');
+  const cat = catEl.value;
+  const wt = parseFloat(document.getElementById('f-wt').value) || 0;
+  const catText = cat ? CAT_NAME[cat] : '—';
+
+  document.getElementById('p-area').textContent = area || '—';
+  document.getElementById('p-cat').textContent = catText;
+  document.getElementById('p-wt').textContent = wt ? wt + ' kg' : '—';
+  document.getElementById('p-rate').textContent = cat ? '₹' + cat + '/kg' : '—';
+
+  if(cat && wt > 0){
+    const est = Math.round(parseFloat(cat) * wt * 0.88);
+    currentPickupEarned = est;
+    document.getElementById('p-reward').textContent = '₹ ' + est.toLocaleString('en-IN');
+  } else {
+    currentPickupEarned = 0;
+    document.getElementById('p-reward').textContent = '₹ —';
   }
+}
 
-  function showSection(id) {
-    const el = document.getElementById(id + '-el');
-    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }
+/* ---- SHOW RECYCLERS ---- */
+function showRecyclers(){
+  const area = document.getElementById('f-area').value;
+  const cat = document.getElementById('f-cat').value;
+  if(!area){ alert('Please select your area.'); return; }
+  if(!cat){ alert('Please select an e-waste category.'); return; }
+  const sec = document.getElementById('recyclers-sec');
+  sec.style.display = 'block';
+  setTimeout(()=>sec.scrollIntoView({behavior:'smooth',block:'start'}),60);
+}
 
-  // RECYCLER SELECTION
-  function selectRecycler(card) {
-    document.querySelectorAll('.recycler-card-item').forEach(c => c.classList.remove('selected'));
-    card.classList.add('selected');
-    const name = card.querySelector('.recycler-name').textContent;
-    const btn = document.querySelector('#recyclers-section-el .btn-primary');
-    if (btn) btn.textContent = 'Confirm Pickup with ' + name + ' →';
-  }
+/* ---- SELECT RECYCLER ---- */
+function selRecycler(card, name){
+  document.querySelectorAll('.r-card').forEach(c=>c.classList.remove('sel'));
+  card.classList.add('sel');
+  document.getElementById('confirm-btn').textContent = 'Confirm Pickup with ' + name + ' →';
+}
 
-  function confirmPickup() {
-    alert('Pickup confirmed! Your QR code will be sent via SMS. The agent will arrive at your scheduled time. Track your pickup in real time from this page.');
-  }
+/* ---- CONFIRM PICKUP — updates wallet + txn table dynamically ---- */
+function confirmPickup(){
+  const catEl = document.getElementById('f-cat');
+  const cat = catEl.value;
+  const wt = parseFloat(document.getElementById('f-wt').value) || 0;
+  const area = document.getElementById('f-area').value;
+  const earned = currentPickupEarned || (cat && wt ? Math.round(parseFloat(cat)*wt*0.88) : 0);
 
-  // TABS
-  function switchTab(btn, tabId) {
-    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-    btn.classList.add('active');
-    const sections = ['tab-requests', 'tab-agents', 'tab-analytics'];
-    sections.forEach(id => {
-      const el = document.getElementById(id);
-      if (el) el.style.display = (id === tabId) ? 'block' : 'none';
-    });
-    if (tabId !== 'tab-requests') {
-      const el = document.getElementById(tabId);
-      if (!el) {
-        // Create placeholder
-        const sec = document.createElement('section');
-        sec.id = tabId;
-        sec.className = 'requests-section';
-        sec.innerHTML = `<div class="section-label">${tabId === 'tab-agents' ? 'Field Agents' : 'Analytics'}</div>
-          <h2 class="section-title" style="font-size:36px;">${tabId === 'tab-agents' ? '12 Active Agents' : 'Performance Overview'}</h2>
-          <p style="color:var(--text-mid);font-size:15px;">This section is available in the full platform. Coming soon in your dashboard.</p>`;
-        document.getElementById('tab-requests').parentNode.appendChild(sec);
-      }
-    }
-  }
+  if(!earned){ alert('Please complete the form above first.'); return; }
 
-  // FADE IN OBSERVER
-  function initFadeIns() {
-    const items = document.querySelectorAll('.page.active .fade-in');
-    const obs = new IntersectionObserver((entries) => {
-      entries.forEach((e, i) => {
-        if (e.isIntersecting) {
-          setTimeout(() => e.target.classList.add('visible'), i * 100);
-        }
-      });
-    }, { threshold: 0.1 });
-    items.forEach(el => obs.observe(el));
-  }
+  // Update wallet balance
+  const balEl = document.getElementById('w-bal');
+  const eqEl = document.getElementById('w-eq');
+  const currentBal = parseInt(balEl.textContent.replace(/[^\d]/g,'')) || 1240;
+  const newBal = currentBal + earned;
+  balEl.textContent = '₹ ' + newBal.toLocaleString('en-IN');
+  const pickups = parseInt((eqEl.textContent.match(/(\d+) pickup/)||[])[1]||4) + 1;
+  eqEl.textContent = '= ' + newBal + ' ReWire Points · Earned from ' + pickups + ' pickups';
 
-  // REQUEST ACCEPT/DECLINE
-  document.addEventListener('click', function(e) {
-    if (e.target.classList.contains('request-accept')) {
-      const card = e.target.closest('.request-card');
-      const id = card.querySelector('.request-id').textContent;
-      card.style.opacity = '0.5';
-      card.style.pointerEvents = 'none';
-      e.target.textContent = '✓ Accepted';
-      e.target.style.background = 'var(--green)';
-    }
-    if (e.target.classList.contains('request-decline')) {
-      const card = e.target.closest('.request-card');
-      card.style.display = 'none';
-    }
+  // Add row to txn table
+  const catName = cat ? CAT_NAME[cat] : 'E-Waste';
+  const now = new Date();
+  const dateStr = now.toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'});
+  const row = document.createElement('div');
+  row.className = 'txn-r';
+  row.innerHTML = `<div class="t-item">${catName}</div><div class="t-date">${dateStr}</div><div class="t-kg">${wt} kg</div><div class="t-pts">+₹ ${earned.toLocaleString('en-IN')}</div>`;
+  const tbl = document.getElementById('txn-tbl');
+  tbl.insertBefore(row, tbl.children[1]);
+
+  // Update recycler KPI
+  const kgEl = document.getElementById('kpi-kg');
+  if(kgEl){ const kg = parseFloat(kgEl.textContent)||2340; kgEl.textContent=(kg+wt).toFixed(1)+' kg'; }
+
+  // Scroll to wallet
+  setTimeout(()=>document.querySelector('.wallet').scrollIntoView({behavior:'smooth',block:'start'}),200);
+  alert('Pickup confirmed! Your QR code has been sent via SMS. The agent will arrive at your scheduled time.');
+}
+
+/* ---- RECYCLER REQUEST ACTIONS ---- */
+function accReq(btn){
+  const card = btn.closest('.req');
+  btn.textContent = '✓ Accepted'; btn.style.background = '#2a9d5c';
+  card.style.opacity = '.55'; card.style.pointerEvents = 'none';
+  const p = document.getElementById('kpi-pend');
+  if(p) p.textContent = Math.max(0,(parseInt(p.textContent)||14)-1);
+}
+function skipReq(btn){ btn.closest('.req').style.display='none'; }
+
+/* ---- TABS ---- */
+function switchTab(btn, id){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('act'));
+  btn.classList.add('act');
+  ['tab-reqs','tab-agents','tab-analytics'].forEach(t=>{
+    const el=document.getElementById(t);
+    if(el) el.style.display=(t===id)?'block':'none';
   });
+}
 
-  window.addEventListener('scroll', initFadeIns);
-  initFadeIns();
+/* ---- FADE OBSERVER ---- */
+function initFades(){
+  const els = document.querySelectorAll('.page.active .fade:not(.vis)');
+  const obs = new IntersectionObserver(entries=>{
+    entries.forEach((e,i)=>{ if(e.isIntersecting) setTimeout(()=>e.target.classList.add('vis'), i*75); });
+  },{threshold:.08});
+  els.forEach(el=>obs.observe(el));
+}
+window.addEventListener('scroll', initFades, {passive:true});
+initFades();
 </script>
 </body>
 </html>
